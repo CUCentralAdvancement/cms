@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "CYPRESS_baseUrl=http://localhost:3000 cypress run --spec \"cypress/integration/automated/**/*\"",
+    "cy:open": "CYPRESS_baseUrl=http://localhost:3000 cypress open"
   },
   "dependencies": {
     "next": "10.0.4",
@@ -17,8 +19,10 @@
     "@types/react": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
+    "cypress": "^6.2.1",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.21.5",

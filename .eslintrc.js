@@ -4,10 +4,12 @@ module.exports = {
   env: {
     node: true,
     es6: true,
+    mocha: true,
+    browser: true,
   },
   parserOptions: { ecmaVersion: 8 }, // to enable features such as async/await
-  ignorePatterns: ['node_modules/*', '.next/*', '.out/*', '!.prettierrc.js'], // We don't want to lint generated files nor node_modules, but we want to lint .prettierrc.js (ignored by default by eslint)
-  extends: ['eslint:recommended'],
+  ignorePatterns: ['node_modules/*', '.next/*', '.out/*'], // We don't want to lint generated files nor node_modules, but we want to lint .prettierrc.js (ignored by default by eslint)
+  extends: ['eslint:recommended', 'plugin:cypress/recommended'],
   overrides: [
     // This configuration will apply only to TypeScript files
     {
@@ -26,7 +28,7 @@ module.exports = {
         'plugin:react-hooks/recommended', // React hooks rules
         'plugin:jsx-a11y/recommended', // Accessibility rules
         'prettier/@typescript-eslint', // Prettier plugin
-        'plugin:prettier/recommended', // Prettier recommended rules 
+        'plugin:prettier/recommended', // Prettier recommended rules
       ],
       rules: {
         // We will use TypeScript's types for component props instead
@@ -51,9 +53,8 @@ module.exports = {
         ],
 
         // Includes .prettierrc.js rules
-        'prettier/prettier': ['error', {}, { usePrettierrc: true }], 
-
+        'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       },
     },
   ],
-}
+};
