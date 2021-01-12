@@ -16,9 +16,9 @@ describe('Basic Authentication Tests', function () {
   });
 
   it('Fails to login with name and password', function () {
-    cy.visit('/user');
+    cy.visit('/login');
     cy.get('input[name=name]').type('foo@bar.com');
-    cy.get('input[name=pass]').type('foop{enter}');
+    cy.get('input[name=password]').type('foop{enter}');
     cy.contains('Sorry, unrecognized username or password. Have you forgotten your password?');
   });
 

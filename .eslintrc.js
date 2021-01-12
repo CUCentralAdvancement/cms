@@ -1,4 +1,3 @@
-// .eslintrc.js
 module.exports = {
   root: true,
   env: {
@@ -7,11 +6,17 @@ module.exports = {
     mocha: true,
     browser: true,
   },
-  parserOptions: { ecmaVersion: 8 }, // to enable features such as async/await
-  ignorePatterns: ['node_modules/*', '.next/*', '.out/*'], // We don't want to lint generated files nor node_modules, but we want to lint .prettierrc.js (ignored by default by eslint)
-  extends: ['eslint:recommended', 'plugin:cypress/recommended'],
+  parserOptions: {
+    ecmaVersion: 9,
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  ignorePatterns: ['node_modules/*', '.next/*', '.out/*'],
+  // Mainly covering Cypress tests and config files by default.
+  extends: ['eslint:recommended', 'plugin:cypress/recommended', 'plugin:react/recommended'],
   overrides: [
-    // This configuration will apply only to TypeScript files
+    // This configuration will apply to all TypeScript files and React components.
     {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
@@ -23,27 +28,23 @@ module.exports = {
       },
       extends: [
         'eslint:recommended',
-        'plugin:@typescript-eslint/recommended', // TypeScript rules
-        'plugin:react/recommended', // React rules
-        'plugin:react-hooks/recommended', // React hooks rules
-        'plugin:jsx-a11y/recommended', // Accessibility rules
-        'prettier/@typescript-eslint', // Prettier plugin
-        'plugin:prettier/recommended', // Prettier recommended rules
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:jsx-a11y/recommended',
+        'prettier/@typescript-eslint',
+        'plugin:prettier/recommended',
       ],
       rules: {
-        // We will use TypeScript's types for component props instead
+        // We will use TypeScript's types for component props instead.
         'react/prop-types': 'off',
-
-        // No need to import React when using Next.js
+        // No need to import React when using Next.js.
         'react/react-in-jsx-scope': 'off',
-
-        // This rule is not compatible with Next.js's <Link /> components
+        // This rule is not compatible with Next.js's <Link /> components.
         'jsx-a11y/anchor-is-valid': 'off',
-
         // Why would you want unused vars?
         '@typescript-eslint/no-unused-vars': ['error'],
-
-        // I suggest this setting for requiring return types on functions only where useful
+        // I suggest this setting for requiring return types on functions only where useful.
         '@typescript-eslint/explicit-function-return-type': [
           'warn',
           {
@@ -51,8 +52,7 @@ module.exports = {
             allowConciseArrowFunctionExpressionsStartingWithVoid: true,
           },
         ],
-
-        // Includes .prettierrc.js rules
+        // Includes .prettierrc.js rules.
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       },
     },
