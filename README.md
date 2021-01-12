@@ -4,11 +4,17 @@ The Central Advancement Content Management System. This is a [Next.js](https://n
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
+# First, download the dependencies.
+yarn
+
+# Make environmental variable file.
+cp .env.example .env.local
+
+# Add environmental variables, usually stored in Heroku UI.
+open -e .env.local
+
+# Start dev server.
 yarn dev
 ```
 
@@ -22,4 +28,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
