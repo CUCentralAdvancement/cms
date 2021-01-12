@@ -1,16 +1,15 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import auth0 from '../utils/auth0';
+import auth0 from '~/utils/auth0';
 import { Box } from '@cu-advancement/component-library';
-import AdminLayout from '../components/global/AdminLayout';
+import AdminLayout from '~/components/global/AdminLayout';
 import { IClaims } from '@auth0/nextjs-auth0/dist/session/session';
-import { User, defaultUser } from '../data/types';
+import { User, defaultUser } from '~/data/types';
 
 interface ProfileProps {
   user: User | IClaims;
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-  console.log(user);
   return (
     <>
       <AdminLayout>
