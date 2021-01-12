@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import auth0 from '../utils/auth0';
 import { Box } from '@cu-advancement/component-library';
 import AdminLayout from '../components/global/AdminLayout';
@@ -6,8 +6,9 @@ import { IClaims } from '@auth0/nextjs-auth0/dist/session/session';
 
 interface User {
   name: string;
-  id: number;
+  picture: string;
   email: string;
+  sub?: string;
 }
 
 interface ProfileProps {
@@ -15,15 +16,16 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-  // console.log(session);
+  console.log(user);
   return (
     <>
       <AdminLayout>
         <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3, bg: 'gray' }}>
+          <img src={user.picture} alt="profile pic" />
           <ul>
             <li>{`Name --- ${user.name}`}</li>
-            <li>{`Name --- ${user.id}`}</li>
-            <li>{`Name --- ${user.email}`}</li>
+            <li>{`Email --- ${user.email}`}</li>
+            <li>{`Sub --- ${user.sub}`}</li>
           </ul>
         </Box>
       </AdminLayout>
@@ -39,7 +41,7 @@ export const getServerSideProps = async (
   // Check for cookie and use that if there?
   // console.log(req.cookies['a0:session']);
 
-  const user: User = { name: 'John Doe', id: 1234, email: 'j@doe.com' };
+  let user: User = { name: 'John Doe', picture: '1234', email: 'j@doe.com', sub: 'N/A' };
 
   // Only do on client-side.
   if (typeof window === 'undefined') {
@@ -51,6 +53,8 @@ export const getServerSideProps = async (
       });
       context.res.end();
     }
+
+    user = session?.user;
     // Set cookie for next request?
   }
 
