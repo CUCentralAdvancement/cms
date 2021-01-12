@@ -20,7 +20,10 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
-      settings: { react: { version: 'detect' } },
+      settings: {
+        react: { version: 'detect' },
+        'import/resolver': 'babel-plugin-root-import',
+      },
       env: {
         browser: true,
         node: true,
