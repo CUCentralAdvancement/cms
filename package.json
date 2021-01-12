@@ -10,6 +10,9 @@
     "cy:open": "CYPRESS_baseUrl=http://localhost:3000 cypress open"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^0.16.0",
+    "@cu-advancement/component-library": "^0.2.8",
+    "framer-motion": "^3.1.4",
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1"
