@@ -3,13 +3,7 @@ import auth0 from '../utils/auth0';
 import { Box } from '@cu-advancement/component-library';
 import AdminLayout from '../components/global/AdminLayout';
 import { IClaims } from '@auth0/nextjs-auth0/dist/session/session';
-
-interface User {
-  name: string;
-  picture: string;
-  email: string;
-  sub?: string;
-}
+import { User, defaultUser } from '../data/types';
 
 interface ProfileProps {
   user: User | IClaims;
@@ -41,7 +35,7 @@ export const getServerSideProps = async (
   // Check for cookie and use that if there?
   // console.log(req.cookies['a0:session']);
 
-  let user: User = { name: 'John Doe', picture: '1234', email: 'j@doe.com', sub: 'N/A' };
+  let user: User = defaultUser;
 
   // Only do on client-side.
   if (typeof window === 'undefined') {

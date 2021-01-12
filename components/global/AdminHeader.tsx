@@ -1,15 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Flex, Box } from '@cu-advancement/component-library';
-
-type Link = {
-  href: string;
-  label: string;
-};
-
-type AdminHeaderProps = {
-  primaryLinks: Array<Link>;
-};
+import { Link as LinkType } from '../../data/types';
+interface AdminHeaderProps {
+  primaryLinks: Array<LinkType>;
+}
 
 const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
   return (
@@ -44,10 +39,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
 };
 
 export default AdminHeader;
-
-type NavLinkProps = {
+interface NavLinkProps {
   href: string;
-};
+}
 
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   return (

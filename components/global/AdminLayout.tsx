@@ -6,12 +6,11 @@ import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import FadeIn from './FadeIn';
 
-type AdminLayoutProps = {
-  role?: string;
+interface AdminLayoutProps {
   mainBg?: string;
-};
+}
 
-const AdminLayout: React.FC<AdminLayoutProps> = React.forwardRef(({ children, role, mainBg = 'inherit' }, ref) => {
+const AdminLayout: React.FC<AdminLayoutProps> = React.forwardRef(({ children, mainBg = 'inherit' }, ref) => {
   return (
     <ThemeProvider
       theme={{
@@ -20,7 +19,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = React.forwardRef(({ children, ro
       }}
     >
       <Flex sx={{ flexDirection: 'column', height: '100vh' }}>
-        <AdminHeader sx={{ flexShrink: 0 }} />
+        <Box sx={{ flexShrink: 0 }}>
+          <AdminHeader primaryLinks={[{ href: '/admin/content', label: 'Content' }]} />
+        </Box>
         <Box
           ref={ref}
           sx={{
@@ -29,12 +30,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = React.forwardRef(({ children, ro
           }}
           as="main"
         >
-          <FadeIn>{children}</FadeIn>
+          <FadeIn duration={0.5}>{children}</FadeIn>
         </Box>
-        <Footer sx={{ flexShrink: 0 }} />
+        <Box sx={{ flexShrink: 0 }}>
+          <Footer />
+        </Box>
       </Flex>
     </ThemeProvider>
   );
 });
+
+AdminLayout.displayName = 'AdminLayout';
 
 export default AdminLayout;
