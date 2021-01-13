@@ -8,8 +8,10 @@ jobs:
     name: Cypress run
     runs-on: ubuntu-latest
     steps:
-      - name: Setup code
+      - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Setup code
         run: |
           yarn
           yarn dev
