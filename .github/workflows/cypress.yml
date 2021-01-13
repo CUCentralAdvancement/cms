@@ -12,9 +12,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup code
-        run: |
-          yarn
-          yarn dev
+        run: yarn
+
+      - name: Build and start CMS
+        run: yarn build && yarn start
 
       - name: Cypress run
         env:
