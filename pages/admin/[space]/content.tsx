@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Box } from '@cu-advancement/component-library';
-import AdminLayout from '~/components/global/AdminLayout';
+import AdminLayout from '../../../components/global/AdminLayout';
 
 interface ContentItem {
   title: string;
@@ -28,7 +28,6 @@ export default ContentOverview;
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
   // Get space from context.
-  console.log(context.params);
   const space = String(context.params?.space);
 
   const content: Array<ContentItem> = [

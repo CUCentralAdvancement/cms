@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Flex, Box } from '@cu-advancement/component-library';
-import { Link as LinkType } from '~/data/types';
+import { Link as LinkType } from '../../data/types';
 interface AdminHeaderProps {
   primaryLinks: Array<LinkType>;
 }
