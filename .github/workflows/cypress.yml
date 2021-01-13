@@ -19,9 +19,11 @@ jobs:
 
       - name: Cypress run
         env:
-          # CYPRESS_CE_USER: ${{ secrets.CYPRESS_CE_USER }}
-          # CYPRESS_CE_PASS: ${{ secrets.CYPRESS_CE_PASS }}
           CYPRESS_BASE_URL: http://localhost:3000/
+          NEXT_PUBLIC_AUTH0_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AUTH0_CLIENT_ID }}
+          NEXT_PUBLIC_AUTH0_CLIENT_SECRET: ${{ secrets.NEXT_PUBLIC_AUTH0_CLIENT_SECRET }}
+          NEXT_PUBLIC_AUTH0_COOKIE_SECRET: ${{ secrets.NEXT_PUBLIC_AUTH0_COOKIE_SECRET }}
+          NEXT_PUBLIC_AUTH0_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH0_DOMAIN }}
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/automated/**/*
