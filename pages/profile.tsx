@@ -1,12 +1,12 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import auth0 from '~/utils/auth0';
+import auth0 from '../utils/auth0';
 import { Box } from '@cu-advancement/component-library';
-import AdminLayout from '~/components/global/AdminLayout';
+import AdminLayout from '../components/global/AdminLayout';
 import { IClaims } from '@auth0/nextjs-auth0/dist/session/session';
-import { User, defaultUser } from '~/data/types';
+import { User, defaultUser } from '../data/types';
 
 interface ProfileProps {
-  user: User | IClaims;
+  user: User | IClaims | undefined;
 }
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
@@ -32,7 +32,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   // Check for cookie and use that if there?
   // console.log(req.cookies['a0:session']);
 
-  let user: User = defaultUser;
+  let user: User | IClaims | undefined = defaultUser;
 
   // Only do on client-side.
   if (typeof window === 'undefined') {
