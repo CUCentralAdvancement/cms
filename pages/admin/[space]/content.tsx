@@ -26,7 +26,9 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ content, space }) => 
 
 export default ContentOverview;
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
   // Get space from context.
   const space = String(context.params?.space);
 

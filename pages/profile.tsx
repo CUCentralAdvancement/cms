@@ -28,7 +28,9 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
 export default Profile;
 
-export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ProfileProps>> => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<ProfileProps>> => {
   // Check for cookie and use that if there?
   // console.log(req.cookies['a0:session']);
 

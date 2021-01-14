@@ -1,5 +1,3 @@
-const { idText, createYield } = require('typescript');
-
 describe('Content Overview Tests', function () {
   beforeEach(() => {
     // Test on the IR20 space.
