@@ -2,7 +2,9 @@ import React from 'react';
 import { Box, Flex, Text, Grid, Menu, LinkButton, Link } from '@cu-advancement/component-library';
 import { footerLinks } from '../../data/menus';
 
-const PaddedText: React.FC = ({ children }) => <Text sx={{ pl: [1, 0], pb: [1, 0], fontWeight: [1] }}>{children}</Text>;
+const PaddedText: React.FC = ({ children }) => (
+  <Text sx={{ pl: [1, 0], pb: [1, 0], fontWeight: [1] }}>{children}</Text>
+);
 
 const Footer: React.FC = () => (
   <Box sx={{ bg: '#000', p: 3 }} as="footer">
@@ -34,10 +36,20 @@ const Footer: React.FC = () => (
         <Menu title="About Us" links={footerLinks.about} variant="bgDark" linkDirection="column" />
       </Box>
       <Box>
-        <Menu title="Quicklinks" links={footerLinks.quicklinks} variant="bgDark" linkDirection="column" />
+        <Menu
+          title="Quicklinks"
+          links={footerLinks.quicklinks}
+          variant="bgDark"
+          linkDirection="column"
+        />
       </Box>
       <Box>
-        <Menu title="Campus Offices" links={footerLinks.campuses} variant="bgDark" linkDirection="column" />
+        <Menu
+          title="Campus Offices"
+          links={footerLinks.campuses}
+          variant="bgDark"
+          linkDirection="column"
+        />
       </Box>
     </Grid>
   </Box>
