@@ -33,7 +33,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
       </Box>
       <Box>
         <NavLink href="/profile">Profile</NavLink>
-        <Button onClick={signOut}>Log Out</Button>
+        <Button data-testid="logout-button" onClick={signOut}>
+          Log Out
+        </Button>
       </Box>
     </Flex>
   );

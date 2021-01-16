@@ -63,7 +63,9 @@ const LoginPrompt: React.FC = () => {
       }}
     >
       <img width="640px" src="/logo.svg" alt="CU Advancement Logo" />
-      <Heading sx={{ my: 5, p: 2 }}>Hello, and welcome to the CMS!</Heading>
+      <Heading as="h1" sx={{ my: 5, p: 2 }}>
+        Hello, and welcome to the CMS!
+      </Heading>
       <Button sx={{ p: 3 }} onClick={signIn}>
         Login!!
       </Button>

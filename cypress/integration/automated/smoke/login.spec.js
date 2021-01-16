@@ -11,62 +11,58 @@ describe('Basic Authentication Tests', function () {
   //   cy.get('.page-title').contains('content_admin');
   // });
 
-  xit('Gets redirected from user to login page if unauthenticated', function () {
-    cy.visit('/user');
+  it('Gets redirected from user to login page if unauthenticated', function () {
+    cy.visit('/admin', { failOnStatusCode: false });
+
+    cy.get('h1').contains('Hello, and welcome to the CMS!');
   });
 
-  xit('Fails to login with name and password', function () {
-    cy.visit('/login');
-    cy.get('input[name=name]').type('foo@bar.com');
-    cy.get('input[name=password]').type('foop{enter}');
-    cy.contains('Sorry, unrecognized username or password. Have you forgotten your password?');
-  });
+  // xit('Fails to login with name and password', function () {
+  //   cy.visit('/');
+  //   cy.get('input[name=name]').type('foo@bar.com');
+  //   cy.get('input[name=password]').type('foop{enter}');
+  //   cy.contains('Sorry, unrecognized username or password. Have you forgotten your password?');
+  // });
 
-  xit('Fails to login without name', function () {
-    cy.visit('/user');
-    cy.get('input[name=pass]').type('foop{enter}');
-    cy.contains('Email Address field is required.');
-  });
+  // xit('Fails to login without name', function () {
+  //   cy.visit('/user');
+  //   cy.get('input[name=pass]').type('foop{enter}');
+  //   cy.contains('Email Address field is required.');
+  // });
 
-  xit('Fails to login without password', function () {
-    cy.visit('/user');
-    cy.get('input[name=name]').type('foo@bar.com{enter}');
-    cy.contains('Password field is required.');
-  });
+  // xit('Fails to login without password', function () {
+  //   cy.visit('/user');
+  //   cy.get('input[name=name]').type('foo@bar.com{enter}');
+  //   cy.contains('Password field is required.');
+  // });
 
-  xit('Administrator logs in, views content overview, logs out, cannot view content overview', function () {
-    cy.visit('/user');
-    cy.get('input[name=name]').type('administrator@nowhere.com');
-    cy.get('input[name=pass]').type('administrator{enter}');
+  it('Administrator logs in, views content overview, logs out, cannot view content overview', function () {
+    cy.visit('/');
+    cy.contains('Login!!').click();
+    cy.contains('Sign in with Auth0').click();
 
-    cy.visit('/admin/content');
-    cy.contains('Published status');
-    cy.visit('/user/logout');
+    // cy.wait(2000);
 
-    cy.request({
-      url: '/admin/content',
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.status).to.eq(403);
-    });
-  });
+    cy.get('input[name="email"]').type('john@doe.com');
+    cy.get('input[name="password"]').type('JohnDoe1234!');
+    cy.get('button[name="submit"]').click();
 
-  xit('Content Admin logs in, can edit content, cannot get to admin section ', function () {
-    cy.visit('/user');
-    cy.get('input[name=name]').type('content_admin@nowhere.com');
-    cy.get('input[name=pass]').type('content_admin{enter}');
+    cy.get('li[data-testid="user-name"]').contains('Name --- john');
+    cy.get('li[data-testid="user-email"]').contains('Email --- john@doe.com');
 
-    cy.visit('/admin/content');
-    cy.get('.views-field-edit-node a').first().click();
-    cy.contains('Save').click();
-    cy.contains('has been updated.');
+    cy.visit('/spaces/ir20/content');
+    cy.contains('Content Overview for the ir20 space');
 
-    cy.request({
-      url: '/admin/config/development/performance',
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.status).to.eq(403);
-    });
+    cy.get('button[data-testid="logout-button"]').click();
+
+    cy.get('h1').contains('Hello, and welcome to the CMS!');
+
+    // cy.request({
+    //   url: '/admin/content',
+    //   failOnStatusCode: false,
+    // }).then((response) => {
+    //   expect(response.status).to.eq(403);
+    // });
   });
 
   xit('Anonymous user cannot get to critical routes', function () {
