@@ -1,24 +1,31 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import auth0 from '../utils/auth0';
+import { useSession, getSession } from 'next-auth/client';
 import { Box } from '@cu-advancement/component-library';
 import AdminLayout from '../components/global/AdminLayout';
-import { IClaims } from '@auth0/nextjs-auth0/dist/session/session';
-import { User, defaultUser } from '../data/types';
+import { defaultUser, User } from '../data/types';
+import prisma from '../lib/prisma';
 
 interface ProfileProps {
-  user: User | IClaims | undefined;
+  user: User;
+  sesh: string;
+  ush: string;
 }
 
-const Profile: React.FC<ProfileProps> = ({ user }) => {
+const Profile: React.FC<ProfileProps> = ({ user, sesh, ush }) => {
+  const [session, loading] = useSession();
+
+  if (typeof window !== 'undefined' && loading) return null;
+  console.log(sesh);
+  console.log(ush);
+
   return (
     <>
       <AdminLayout>
         <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3, bg: 'gray' }}>
-          <img src={user.picture} alt="profile pic" />
+          <img src={user.image} alt="profile pic" />
           <ul>
             <li>{`Name --- ${user.name}`}</li>
             <li>{`Email --- ${user.email}`}</li>
-            <li>{`Sub --- ${user.sub}`}</li>
           </ul>
         </Box>
       </AdminLayout>
@@ -31,31 +38,11 @@ export default Profile;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ): Promise<GetServerSidePropsResult<ProfileProps>> => {
-  // Check for cookie and use that if there?
-  // console.log(req.cookies['a0:session']);
+  const session = await getSession(context);
+  const user = session?.user ?? defaultUser;
 
-  let user: User | IClaims | undefined = defaultUser;
+  const sesh = JSON.stringify(await prisma.session.findMany());
+  const ush = JSON.stringify(await prisma.user.findMany());
 
-  // Only do on client-side.
-  if (typeof window === 'undefined') {
-    // Get Auth0 session and redirect to login if no user.
-    const session = await auth0.getSession(context.req);
-    if (!session || !session.user) {
-      context.res.writeHead(302, {
-        Location: '/api/login',
-      });
-      context.res.end();
-    }
-
-    user = session?.user;
-    // Set cookie for next request?
-  }
-
-  // Grab user info from db.
-  // if (user.email) {
-  //   const db = require('../data/db').instance;
-  //   db.query();
-  // }
-
-  return { props: { user } };
+  return { props: { user, sesh, ush } };
 };

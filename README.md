@@ -14,6 +14,9 @@ cp .env.example .env.local
 # Add environmental variables, usually stored in Heroku UI.
 open -e .env.local
 
+# Boot up Postgres
+# OR get from ...
+
 # Start dev server.
 yarn dev
 ```
