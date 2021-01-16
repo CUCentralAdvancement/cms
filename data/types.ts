@@ -6,7 +6,8 @@ export interface User {
 
 export const defaultUser: User = {
   name: 'John Doe',
-  image: '1234',
+  image:
+    'http://www.messagescollection.com/wp-content/uploads/2015/04/cute-cat-profile-for-facebook.jpg',
   email: 'j@doe.com',
 };
 

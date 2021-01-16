@@ -15,6 +15,7 @@ const Profile: React.FC<ProfileProps> = ({ user, sesh, ush }) => {
   const [session, loading] = useSession();
 
   if (typeof window !== 'undefined' && loading) return null;
+  console.log(session);
   console.log(sesh);
   console.log(ush);
 
