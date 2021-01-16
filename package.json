@@ -6,19 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "CYPRESS_baseUrl=http://localhost:3000 cypress run --spec \"cypress/integration/automated/**/*\"",
-    "cy:open": "CYPRESS_baseUrl=http://localhost:3000 cypress open",
-    "lint": "eslint ."
+    "test": "cypress run --spec \"cypress/integration/automated/**/*\"",
+    "cy:open": "cypress open",
+    "lint": "eslint .",
+    "db:migrate": "prisma migrate dev --preview-feature"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^0.16.0",
     "@cu-advancement/component-library": "^0.2.8",
+    "@prisma/client": "^2.14.0",
     "framer-motion": "^3.1.4",
     "next": "10.0.4",
+    "next-auth": "^3.1.0",
+    "pg": "^8.5.1",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
   "devDependencies": {
+    "@prisma/cli": "^2.14.0",
+    "@types/next-auth": "^3.1.21",
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
     "@types/theme-ui": "^0.3.7",

@@ -1,29 +1,49 @@
-import Head from 'next/head';
-// import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { useSession, getSession } from 'next-auth/client';
+import { Box } from '@cu-advancement/component-library';
+import AdminLayout from '../components/global/AdminLayout';
+import { defaultUser, User } from '../data/types';
+import prisma from '../lib/prisma';
 
-export default function Home() {
+interface ProfileProps {
+  user: User;
+  sesh: string;
+  ush: string;
+}
+
+const Profile: React.FC<ProfileProps> = ({ user, sesh, ush }) => {
+  const [session, loading] = useSession();
+
+  if (typeof window !== 'undefined' && loading) return null;
+  console.log(session);
+  console.log(sesh);
+  console.log(ush);
+
   return (
     <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by <img src="/vercel.svg" alt="Vercel Logo" />
-        </a>
-      </footer>
+      <AdminLayout>
+        <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3, bg: 'gray' }}>
+          <img src={user.image} alt="profile pic" />
+          <ul>
+            <li data-testid="user-name">{`Name --- ${user.name}`}</li>
+            <li data-testid="user-email">{`Email --- ${user.email}`}</li>
+          </ul>
+        </Box>
+      </AdminLayout>
     </>
   );
-}
+};
+
+export default Profile;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<ProfileProps>> => {
+  const session = await getSession(context);
+  const user = session?.user ?? defaultUser;
+
+  const sesh = JSON.stringify(await prisma.session.findMany());
+  const ush = JSON.stringify(await prisma.user.findMany());
+
+  return { props: { user, sesh, ush } };
+};

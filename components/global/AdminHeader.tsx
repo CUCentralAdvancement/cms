@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { Flex, Box } from '@cu-advancement/component-library';
+import { Flex, Box, Button } from '@cu-advancement/component-library';
 import { Link as LinkType } from '../../data/types';
+import { signOut } from 'next-auth/client';
 interface AdminHeaderProps {
   primaryLinks: Array<LinkType>;
 }
@@ -32,7 +33,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
       </Box>
       <Box>
         <NavLink href="/profile">Profile</NavLink>
-        <NavLink href="/api/logout">Log Out</NavLink>
+        <Button data-testid="logout-button" onClick={signOut}>
+          Log Out
+        </Button>
       </Box>
     </Flex>
   );
