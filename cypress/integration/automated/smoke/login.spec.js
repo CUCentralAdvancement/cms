@@ -41,8 +41,6 @@ describe('Basic Authentication Tests', function () {
     cy.contains('Login!!').click();
     cy.contains('Sign in with Auth0').click();
 
-    // cy.wait(2000);
-
     cy.get('input[name="email"]').type('john@doe.com');
     cy.get('input[name="password"]').type('JohnDoe1234!');
     cy.get('button[name="submit"]').click();
