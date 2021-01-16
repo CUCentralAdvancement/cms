@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "cypress run --spec \"cypress/integration/automated/**/*\"",
     "cy:open": "cypress open",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "db:migrate": "prisma migrate dev --preview-feature"
   },
   "dependencies": {
     "@cu-advancement/component-library": "^0.2.8",
