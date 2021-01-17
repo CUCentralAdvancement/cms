@@ -1,5 +1,3 @@
-import { Space } from '@prisma/client';
-
 export const defaultUser: UserSelect = {
   id: 99,
   name: 'John Doe',

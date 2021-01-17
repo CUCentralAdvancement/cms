@@ -8,7 +8,7 @@ interface AdminHeaderProps {
 }
 
 const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
-  const [session, lodaing] = useSession();
+  const [session] = useSession();
   return (
     <Flex
       as="header"

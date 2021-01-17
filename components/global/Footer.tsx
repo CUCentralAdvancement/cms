@@ -1,10 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Grid, Menu, LinkButton, Link } from '@cu-advancement/component-library';
-import { footerLinks } from '../../data/menus';
-
-const PaddedText: React.FC = ({ children }) => (
-  <Text sx={{ pl: [1, 0], pb: [1, 0], fontWeight: [1] }}>{children}</Text>
-);
+import { Box, Grid } from 'theme-ui';
 
 const Footer: React.FC = () => (
   <Box sx={{ bg: '#000', p: 4 }} as="footer">
