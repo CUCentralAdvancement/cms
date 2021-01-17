@@ -14,6 +14,26 @@ const options = {
   ],
   adapter: Adapters.Prisma.Adapter({ prisma }),
   secret: process.env.AUTH0_COOKIE_SECRET,
+  events: {
+    // signIn: async (message) => {
+    //   /* on successful sign in */
+    // },
+    // signOut: async (message) => {
+    //   /* on signout */
+    // },
+    createUser: async (message) => {
+      console.log(message);
+    },
+    // linkAccount: async (message) => {
+    //   /* account linked to a user */
+    // },
+    // session: async (message) => {
+    //   /* session is active */
+    // },
+    // error: async (message) => {
+    //   /* error in authentication flow */
+    // },
+  },
 };
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);

@@ -2,12 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import { Flex, Box, Button } from '@cu-advancement/component-library';
 import { Link as LinkType } from '../../data/types';
-import { signOut } from 'next-auth/client';
+import { signOut, useSession } from 'next-auth/client';
 interface AdminHeaderProps {
   primaryLinks: Array<LinkType>;
 }
 
 const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
+  const [session] = useSession();
   return (
     <Flex
       as="header"
@@ -17,7 +18,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
         variant: 'styles.header',
         backgroundColor: '#000',
         color: '#fff',
-        p: 3,
+        p: 1,
         flexDirection: ['column', 'row'],
       }}
     >
@@ -31,12 +32,21 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
             );
           })}
       </Box>
-      <Box>
-        <NavLink href="/profile">Profile</NavLink>
+      <Flex sx={{ justifyContent: 'space-between' }}>
+        <Link href="/">
+          <a>
+            <img
+              style={{ marginRight: '12px', paddingTop: '6px' }}
+              height="50px"
+              src={session.user.image}
+              alt="profile"
+            />
+          </a>
+        </Link>
         <Button data-testid="logout-button" onClick={signOut}>
           Log Out
         </Button>
-      </Box>
+      </Flex>
     </Flex>
   );
 };

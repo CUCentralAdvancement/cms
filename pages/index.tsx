@@ -1,33 +1,36 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { useSession, getSession } from 'next-auth/client';
-import { Box } from '@cu-advancement/component-library';
+import { getSession } from 'next-auth/client';
+import { Box, Heading, Flex, Grid } from '@cu-advancement/component-library';
 import AdminLayout from '../components/global/AdminLayout';
-import { defaultUser, User } from '../data/types';
+import { defaultUser, UserSelect } from '../data/types';
 import prisma from '../lib/prisma';
-
 interface ProfileProps {
-  user: User;
-  sesh: string;
-  ush: string;
+  user: UserSelect;
 }
 
-const Profile: React.FC<ProfileProps> = ({ user, sesh, ush }) => {
-  const [session, loading] = useSession();
-
-  if (typeof window !== 'undefined' && loading) return null;
-  console.log(session);
-  console.log(sesh);
-  console.log(ush);
-
+const Profile: React.FC<ProfileProps> = ({ user }) => {
   return (
     <>
       <AdminLayout>
-        <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3, bg: 'gray' }}>
-          <img src={user.image} alt="profile pic" />
-          <ul>
-            <li data-testid="user-name">{`Name --- ${user.name}`}</li>
-            <li data-testid="user-email">{`Email --- ${user.email}`}</li>
-          </ul>
+        <Box sx={{ maxWidth: '1280px', mx: 'auto', mt: 4, p: 3 }}>
+          <Flex
+            sx={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Heading as="h1">{`Welcome ${user.name}!`}</Heading>
+            <img src={user.image} alt="profile pic" />
+          </Flex>
+          <Heading sx={{ my: 3 }} as="h2">
+            Spaces
+          </Heading>
+          <Grid gap={2} columns={[1, 2, 4]} sx={{ maxWidth: 1280, mx: 'auto' }}>
+            {/* {user.spaces.map((el) => {
+              return <span key={el}>{spaceConfig[el].label}</span>;
+            })} */}
+          </Grid>
         </Box>
       </AdminLayout>
     </>
@@ -39,11 +42,21 @@ export default Profile;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ): Promise<GetServerSidePropsResult<ProfileProps>> => {
+  let user = defaultUser;
   const session = await getSession(context);
-  const user = session?.user ?? defaultUser;
 
-  const sesh = JSON.stringify(await prisma.session.findMany());
-  const ush = JSON.stringify(await prisma.user.findMany());
+  if (session?.accessToken) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+      },
+    });
+    user = { ...session.user, ...dbUser };
+  }
 
-  return { props: { user, sesh, ush } };
+  return { props: { user } };
 };

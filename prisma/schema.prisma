@@ -67,6 +67,17 @@ model VerificationRequest {
 
 // End user info.
 
+model Space {
+  id       Int     @default(autoincrement()) @id
+  label    String
+  key      String  @unique
+  image    String?
+  active   Boolean
+  members  String  @default("alex.finnarn@gmail.com") 
+
+  @@map(name: "spaces")
+}
+
 // IR20 space.
 
 // model StoryIR20 {
