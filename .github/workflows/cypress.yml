@@ -35,7 +35,7 @@ jobs:
         run: yarn
 
       - name: Migrate db.
-        run: yarn db:migrate
+        run: yarn migrate
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
