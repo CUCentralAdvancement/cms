@@ -9,7 +9,8 @@
     "test": "cypress run --spec \"cypress/integration/automated/**/*\"",
     "cy:open": "cypress open",
     "lint": "eslint .",
-    "db:migrate": "prisma migrate dev --preview-feature"
+    "migrate": "prisma migrate dev --preview-feature",
+    "gen": "prisma generate"
   },
   "dependencies": {
     "@cu-advancement/component-library": "^0.2.8",
@@ -19,7 +20,8 @@
     "next-auth": "^3.1.0",
     "pg": "^8.5.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-hook-form": "^6.14.1"
   },
   "devDependencies": {
     "@prisma/cli": "^2.14.0",

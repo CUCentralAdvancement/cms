@@ -1,17 +1,4 @@
 -- CreateTable
-CREATE TABLE "users" (
-"id" SERIAL,
-    "name" TEXT,
-    "email" TEXT,
-    "email_verified" TIMESTAMP(3),
-    "image" TEXT,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-
-    PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "accounts" (
 "id" SERIAL,
     "compound_id" TEXT NOT NULL,
@@ -42,6 +29,19 @@ CREATE TABLE "sessions" (
 );
 
 -- CreateTable
+CREATE TABLE "users" (
+"id" SERIAL,
+    "name" TEXT,
+    "email" TEXT,
+    "email_verified" TIMESTAMP(3),
+    "image" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "verification_requests" (
 "id" SERIAL,
     "identifier" TEXT NOT NULL,
@@ -53,8 +53,17 @@ CREATE TABLE "verification_requests" (
     PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "users.email_unique" ON "users"("email");
+-- CreateTable
+CREATE TABLE "spaces" (
+"id" SERIAL,
+    "label" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "image" TEXT,
+    "active" BOOLEAN NOT NULL,
+    "members" TEXT NOT NULL DEFAULT E'alex.finnarn@gmail.com',
+
+    PRIMARY KEY ("id")
+);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "accounts.compound_id_unique" ON "accounts"("compound_id");
@@ -75,4 +84,10 @@ CREATE UNIQUE INDEX "sessions.session_token_unique" ON "sessions"("session_token
 CREATE UNIQUE INDEX "sessions.access_token_unique" ON "sessions"("access_token");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users.email_unique" ON "users"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "verification_requests.token_unique" ON "verification_requests"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "spaces.key_unique" ON "spaces"("key");

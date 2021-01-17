@@ -14,14 +14,21 @@ cp .env.example .env.local
 # Add environmental variables, usually stored in Heroku UI.
 open -e .env.local
 
-# Boot up Postgres
-# OR get from ...
+# Boot up Postgres service.
+docker-compose -f local-dev-stack.yml up -d
+
+# Prisma migrate database tables.
+yarn db:migrate
 
 # Start dev server.
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the login prompt.
+
+## User Accounts
+
+All routes on the app using the `AdminLayout` are protected and need authentication through Auth0.
 
 ## Learn More
 
