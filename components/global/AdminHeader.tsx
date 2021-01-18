@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Flex, Box, Button } from '@cu-advancement/component-library';
+import { Flex, Box, Button } from 'theme-ui';
 import { Link as LinkType } from '../../data/types';
 import { signOut, useSession } from 'next-auth/client';
 interface AdminHeaderProps {

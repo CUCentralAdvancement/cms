@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { Box } from '@cu-advancement/component-library';
+import { Box } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 
 interface ContentItem {

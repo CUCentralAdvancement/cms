@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid } from '@cu-advancement/component-library';
+import { Box, Heading, Flex, Grid } from 'theme-ui';
 import AdminLayout from '../components/global/AdminLayout';
 import { defaultUser, UserSelect } from '../data/types';
 import prisma from '../lib/prisma';

@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid } from '@cu-advancement/component-library';
+import { Box, Heading, Flex, Grid } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 import prisma from '../../../lib/prisma';
-import { Space } from '@prisma/client';
+import { Space } from '../../../data/types';
 
 interface SpacesAdminProps {
   spaces: Array<Space>;

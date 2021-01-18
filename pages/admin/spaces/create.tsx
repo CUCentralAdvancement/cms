@@ -1,23 +1,19 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Router from 'next/router';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button } from '@cu-advancement/component-library';
-import { Label } from 'theme-ui';
+import { Box, Heading, Flex, Grid, Button, Label } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 import { useForm } from 'react-hook-form';
 import { CreateSpaceInputs } from '../../../data/types';
-
 interface CreateSpaceFormProps {
   admin: boolean;
 }
 
 const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
-  // const [message, setMessage] = useState(null);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
     createSpace(data);
-    // setMessage(`Space created: \n\n ${JSON.stringify(data)}`);
   };
 
   if (!admin) {

@@ -22,7 +22,6 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       settings: {
         react: { version: 'detect' },
-        'import/resolver': 'babel-plugin-root-import',
       },
       env: {
         browser: true,

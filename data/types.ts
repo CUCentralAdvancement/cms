@@ -26,3 +26,13 @@ export interface CreateSpaceInputs {
   spaceActive: boolean;
   spaceMembers: string;
 }
+
+export interface Space {
+  id: number;
+  label: string;
+  key: string;
+  color?: string;
+  image?: string;
+  active: boolean;
+  members: string;
+}

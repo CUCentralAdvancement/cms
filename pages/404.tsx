@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Heading, Button, Flex } from '@cu-advancement/component-library';
+import { Heading, Button, Flex } from 'theme-ui';
 import AdminLayout from '../components/global/AdminLayout';
 
 const Custom404: React.FC = () => {
