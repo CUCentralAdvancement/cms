@@ -71,7 +71,7 @@ model Space {
   id       Int     @default(autoincrement()) @id
   label    String
   key      String  @unique
-  image    String?
+  image    String
   active   Boolean
   members  String  @default("alex.finnarn@gmail.com") 
 
