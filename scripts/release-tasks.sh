@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Install site if on review app. Import config if on other environments.
 if [[ -z "$HEROKU_PR_NUMBER" ]]
   then
   echo "Not on a review app. No need to copy database."
@@ -11,7 +10,7 @@ else
 
   echo "Generating prisma client..."
   yarn gen 
-  
+
   # Split db url into parts since the pg:copy command needs it to confirm deletion.
   # ${DB_NAME[3]} ends up being the database name.
   # IFS is the internal string separator which needs set to forward-slash for parsing db url string.
