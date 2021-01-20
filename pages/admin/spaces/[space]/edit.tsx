@@ -5,7 +5,7 @@ import { getSession, Session } from 'next-auth/client';
 import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
 import { useForm } from 'react-hook-form';
-import { CreateSpaceInputs, Space } from '../../../../data/types';
+import { CreateSpaceInputs, Space, defaultSpace } from '../../../../data/types';
 interface EditSpaceFormProps {
   admin: boolean;
   space: Space;
