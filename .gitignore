@@ -99,3 +99,7 @@ typings/
 # Cypress
 cypress/videos
 cypress/screenshots
+
+# Local SSL.
+localhost.crt
+localhost.key
