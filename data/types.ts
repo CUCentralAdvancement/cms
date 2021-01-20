@@ -21,7 +21,7 @@ export interface Link {
 export interface CreateSpaceInputs {
   spaceLabel: string;
   spaceKey: string;
-  spaceColor: string;
+  spaceColor?: string;
   spaceImage: string;
   spaceActive: boolean;
   spaceMembers: string;
@@ -36,3 +36,13 @@ export interface Space {
   active: boolean;
   members: string;
 }
+
+export const defaultSpace: Space = {
+  id: 1,
+  label: 'Example',
+  key: 'example',
+  color: '#000',
+  image: 'https://essential.cu.edu/home-banner-onward.png',
+  active: false,
+  members: 'alex.finnarn@gmail.com',
+};

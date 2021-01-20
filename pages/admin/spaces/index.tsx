@@ -1,9 +1,10 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid } from 'theme-ui';
+import { Box, Heading, Flex, Grid, Card, Image, AspectRatio, Button } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 import prisma from '../../../lib/prisma';
 import { Space } from '../../../data/types';
+import Link from 'next/link';
 
 interface SpacesAdminProps {
   spaces: Array<Space>;
@@ -19,14 +20,46 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              mb: 3,
             }}
           >
             <Heading as="h1">Spaces Admin</Heading>
-            {/* <img src={user.image} alt="profile pic" /> */}
+            <Link href="/admin/spaces/create">
+              <a>
+                <Button sx={{ fontSize: 4 }}>Create Space +</Button>
+              </a>
+            </Link>
           </Flex>
-          <Grid gap={2} columns={[1, 2, 4]} sx={{ maxWidth: 1280, mx: 'auto' }}>
+          <Grid gap={2} columns={[1, 2, 3]} sx={{ maxWidth: 1280, mx: 'auto' }}>
             {spaces.map((space) => {
-              return <span key={space.id}>{space.label}</span>;
+              return (
+                <Card key={space.id} sx={{}}>
+                  <AspectRatio ratio={16 / 9}>
+                    <Image
+                      src={space.image}
+                      sx={{
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </AspectRatio>
+                  <Flex
+                    sx={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mt: 2,
+                      p: 1,
+                    }}
+                  >
+                    <Heading as="h2">{space.label}</Heading>
+                    <Link as={`/admin/spaces/${space.key}/edit`} href="/admin/spaces/[space]/edit">
+                      <a>
+                        <Button>Edit</Button>
+                      </a>
+                    </Link>
+                  </Flex>
+                </Card>
+              );
             })}
           </Grid>
         </Box>

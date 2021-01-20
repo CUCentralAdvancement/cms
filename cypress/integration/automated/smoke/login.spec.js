@@ -45,13 +45,20 @@ describe('Basic Authentication Tests', function () {
     cy.get('input[name="password"]').type('JohnDoe1234!');
     cy.get('button[name="submit"]').click();
 
-    cy.get('li[data-testid="user-name"]').contains('Name --- john');
-    cy.get('li[data-testid="user-email"]').contains('Email --- john@doe.com');
+    cy.get('h1[data-testid="user-name"]').contains('Welcome john!');
+    cy.get('img[data-testid="user-image"]').should(
+      'have.attr',
+      'src',
+      'https://s.gravatar.com/avatar/6a6c19fea4a3676970167ce51f39e6ee?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjo.png'
+    );
 
-    cy.visit('/spaces/ir20/content');
-    cy.contains('Content Overview for the ir20 space');
+    // cy.visit('/spaces/ir20/content');
+    // cy.contains('Content Overview for the ir20 space');
 
     cy.get('button[data-testid="logout-button"]').click();
+
+    cy.contains('Are you sure you want to sign out?');
+    cy.get('button[type="submit"]').click();
 
     cy.get('h1').contains('Hello, and welcome to the CMS!');
 
