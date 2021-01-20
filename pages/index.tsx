@@ -20,8 +20,8 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               alignItems: 'center',
             }}
           >
-            <Heading as="h1">{`Welcome ${user.name}!`}</Heading>
-            <img src={user.image} alt="profile pic" />
+            <Heading data-testid="user-name" as="h1">{`Welcome ${user.name}!`}</Heading>
+            <img data-testid="user-image" src={user.image} alt="profile pic" />
           </Flex>
           <Heading sx={{ my: 3 }} as="h2">
             Spaces
