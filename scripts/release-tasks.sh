@@ -5,8 +5,8 @@ if [[ -z "$HEROKU_PR_NUMBER" ]]
   echo "Not on a review app. No need to copy database."
 else
 
-  echo "Migrating database..."
-  yarn migrate
+  # echo "Migrating database..."
+  # yarn migrate
 
   echo "Generating prisma client..."
   yarn gen 
