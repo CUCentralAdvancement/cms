@@ -43,9 +43,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
             />
           </a>
         </Link>
-        <Button data-testid="logout-button" onClick={signOut}>
-          Log Out
-        </Button>
+        <Link href="/api/auth/signin">
+          <Button data-testid="logout-button">Log Out</Button>
+        </Link>
       </Flex>
     </Flex>
   );
