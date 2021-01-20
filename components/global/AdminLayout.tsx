@@ -1,6 +1,6 @@
 import React from 'react';
-import { signIn, useSession } from 'next-auth/client';
-import { Box, Flex, Button, Heading, ThemeProvider } from 'theme-ui';
+import { useSession } from 'next-auth/client';
+import { Box, Flex, Button, Heading, Link, ThemeProvider } from 'theme-ui';
 import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import FadeIn from './FadeIn';
@@ -63,9 +63,9 @@ const LoginPrompt: React.FC = () => {
       <Heading as="h1" sx={{ my: 5, p: 2 }}>
         Hello, and welcome to the CMS!
       </Heading>
-      <Button sx={{ p: 3 }} onClick={() => signIn}>
-        Login!!
-      </Button>
+      <Link href="/api/auth/signin">
+        <Button sx={{ p: 3 }}>Login!!</Button>
+      </Link>
     </Flex>
   );
 };
