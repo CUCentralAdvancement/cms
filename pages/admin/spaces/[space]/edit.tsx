@@ -2,13 +2,13 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Router from 'next/router';
 import prisma from '../../../../lib/prisma';
 import { getSession, Session } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button, Label } from 'theme-ui';
+import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
 import { useForm } from 'react-hook-form';
-import { CreateSpaceInputs } from '../../../../data/types';
+import { CreateSpaceInputs, Space } from '../../../../data/types';
 interface EditSpaceFormProps {
   admin: boolean;
-  space: CreateSpaceInputs;
+  space: Space;
 }
 
 const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
@@ -35,7 +35,7 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
             }}
           >
             <Heading sx={{ my: 3 }} as="h1">
-              Create A Space
+              {`Edit ${space.label} Space`}
             </Heading>
             {/* <img src={user.image} alt="profile pic" /> */}
           </Flex>
@@ -43,23 +43,50 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
             <Grid gap={3}>
               <Box>
                 <Label htmlFor="spaceLabel">Space Label</Label>
-                <input name="spaceLabel" ref={register} spellCheck size={80} />
+                <input
+                  defaultValue={space.label}
+                  name="spaceLabel"
+                  ref={register}
+                  spellCheck
+                  size={80}
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceKey">Space Key</Label>
-                <input name="spaceKey" ref={register} spellCheck size={80} />
+                <Text sx={{ p: 1, color: 'darkred' }}>
+                  **You cannot edit the key after creating the space.
+                </Text>
+                <input
+                  defaultValue={space.key}
+                  readOnly
+                  name="spaceKey"
+                  ref={register}
+                  spellCheck
+                  size={80}
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceColor">Space Background Color</Label>
-                <input type="color" name="spaceColor" ref={register} />
+                <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
               </Box>
               <Box>
                 <Label htmlFor="spaceImage">Space Image</Label>
-                <input name="spaceImage" ref={register} spellCheck size={80} />
+                <input
+                  defaultValue={space.image}
+                  name="spaceImage"
+                  ref={register}
+                  spellCheck
+                  size={80}
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceActive">Is Space Active?</Label>
-                <input type="checkbox" name="spaceActive" ref={register} />
+                <input
+                  defaultChecked={space.active}
+                  type="checkbox"
+                  name="spaceActive"
+                  ref={register}
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceMembers">Members</Label>
@@ -67,7 +94,7 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                   cols={69}
                   rows={3}
                   name="spaceMembers"
-                  defaultValue="alex.finnarn@gmail.com"
+                  defaultValue={space.members}
                   ref={register}
                 ></textarea>
               </Box>
@@ -97,11 +124,11 @@ export const getServerSideProps = async (
     return { props: { admin: false, space: defaultSpace } };
   }
 
-  const space: CreateSpaceInputs = await prisma.space.findUnique({
-    where: { key: context.params.space },
+  const space: Space = await prisma.space.findUnique({
+    where: { key: String(context.params.space) },
   });
 
-  return { props: { space } };
+  return { props: { admin: true, space } };
 };
 
 async function updateSpace(data: CreateSpaceInputs): Promise<void> {

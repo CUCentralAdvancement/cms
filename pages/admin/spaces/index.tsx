@@ -24,7 +24,11 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
             }}
           >
             <Heading as="h1">Spaces Admin</Heading>
-            {/* <img src={user.image} alt="profile pic" /> */}
+            <Link href="/admin/spaces/create">
+              <a>
+                <Button sx={{ fontSize: 4 }}>Create Space +</Button>
+              </a>
+            </Link>
           </Flex>
           <Grid gap={2} columns={[1, 2, 3]} sx={{ maxWidth: 1280, mx: 'auto' }}>
             {spaces.map((space) => {
@@ -48,7 +52,7 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
                     }}
                   >
                     <Heading as="h2">{space.label}</Heading>
-                    <Link as={`admin/spaces/${space.key}/edit`} href="admin/spaces/[space]/edit">
+                    <Link as={`/admin/spaces/${space.key}/edit`} href="/admin/spaces/[space]/edit">
                       <a>
                         <Button>Edit</Button>
                       </a>

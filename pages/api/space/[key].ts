@@ -4,7 +4,8 @@ import { getSession } from 'next-auth/client';
 import { CreateSpaceInputs } from '../../../data/types';
 
 // POST /api/space
-const handleCreateSpace: NextApiHandler = async (req, res) => {
+const handleUpdateSpace: NextApiHandler = async (req, res) => {
+  const spackeKey = req.query.key;
   const data: CreateSpaceInputs = req.body;
   const adminEmails: string = process.env.ADMIN_EMAILS;
   const session = await getSession({ req });
@@ -16,27 +17,23 @@ const handleCreateSpace: NextApiHandler = async (req, res) => {
     res.end(JSON.stringify({ error: 'Unauthorized Access' }));
   }
 
-  // @todo Add check for "req.method === POST".
-  // This could handle listing for GET and creation for POST.
-
-  try {
-    const result = await prisma.space.create({
+  if (req.method === 'PUT') {
+    const space = await prisma.space.update({
+      where: { key: String(spackeKey) },
       data: {
-        label: data.spaceLabel,
         key: data.spaceKey,
-        active: data.spaceActive,
+        label: data.spaceLabel,
+        // @todo Add color to the Space model.
+        // color: data.spaceColor,
         image: data.spaceImage,
+        active: data.spaceActive,
         members: data.spaceMembers,
-        // content: content,
-        // author: { connect: { email: session?.user?.email } },
       },
     });
-    res.json(result);
-  } catch (error) {
-    res.statusCode = 500;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ error }));
+    res.json(space);
+  } else {
+    throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
   }
 };
 
-export default handleCreateSpace;
+export default handleUpdateSpace;

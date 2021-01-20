@@ -21,7 +21,7 @@ export interface Link {
 export interface CreateSpaceInputs {
   spaceLabel: string;
   spaceKey: string;
-  spaceColor: string;
+  spaceColor?: string;
   spaceImage: string;
   spaceActive: boolean;
   spaceMembers: string;
