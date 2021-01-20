@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Flex, Box, Button } from 'theme-ui';
 import { Link as LinkType } from '../../data/types';
-import { signOut, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 interface AdminHeaderProps {
   primaryLinks: Array<LinkType>;
 }
@@ -43,7 +43,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
             />
           </a>
         </Link>
-        <Link href="/api/auth/signin">
+        <Link href="/api/auth/signout">
           <Button data-testid="logout-button">Log Out</Button>
         </Link>
       </Flex>
