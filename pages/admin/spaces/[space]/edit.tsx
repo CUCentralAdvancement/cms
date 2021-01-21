@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import Link from 'next/link';
 import Router from 'next/router';
 import prisma from '../../../../lib/prisma';
 import { getSession, Session } from 'next-auth/client';
@@ -98,7 +99,22 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                   ref={register}
                 ></textarea>
               </Box>
-              <Button type="submit">Submit</Button>
+              <Flex
+                sx={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Button type="submit">Update</Button>
+                <Link as={`/admin/spaces/${space.key}/delete`} href="/admin/spaces/[space]/delete">
+                  <a>
+                    <Button variant="button.secondary" data-testid="delete-space-button">
+                      Delete
+                    </Button>
+                  </a>
+                </Link>
+              </Flex>
             </Grid>
           </form>
         </Box>
