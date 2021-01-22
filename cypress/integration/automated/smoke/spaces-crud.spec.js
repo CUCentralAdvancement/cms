@@ -4,21 +4,45 @@ describe('Spaces CRUD Operation Tests', function () {
   //   cy.visit('/admin/ir20/content');
   // });
 
-  xit('should be able to create, edit, and delete a space', () => {
+  it('should be able to create, edit, and delete a space', () => {
     cy.visit('/');
     cy.contains('Login!!').click();
     cy.contains('Sign in with Auth0').click();
 
-    cy.get('input[name="email"]').type('john@doe.com');
-    cy.get('input[name="password"]').type('JohnDoe1234!');
-    cy.get('button[name="submit"]').click();
+    // @todo This only works since the previous login test produces a
+    // are you "John Doe?" second login flow.
+    cy.get('a.auth0-lock-social-button').click();
 
     cy.get('a[href="/admin/spaces"]').contains('Spaces').click();
 
-    // @todo This gets stuck on a previous h1 due to page transition
-    // but no h1 swap. I think just .innerHTML.
-    // So, the page loading/animations and all should be looked at.
-    // Otherwise, there has to be cy.wait() commands or other workarounds.
-    cy.get('h1').contains('Spaces Admin');
+    cy.get('h1[data-testid="spaces-admin-heading"]').contains('Spaces Admin');
+    cy.get('button[data-testid="create-space-button"]').click();
+
+    cy.get('h1[data-testid="create-space-heading"]').contains('Create A Space');
+    cy.get('input[name="spaceLabel"]').type('Space Is The Place');
+    cy.get('input[name="spaceKey"]').type('space_place');
+    // @todo Add color when fixed.
+    cy.get('input[name="spaceImage"]').type('https://i.ytimg.com/vi/2G0Q7ygC2CU/hqdefault.jpg');
+    cy.get('input[name="spaceActive"]').check();
+    cy.get('textarea[name="spaceMembers"]').type(',john@doe.com');
+    cy.get('button[data-testid="create-space-button"]').click();
+
+    cy.url().should('eq', 'http://localhost:3000/admin/spaces');
+    cy.get('div[data-testid="card-space_place"]').within(() => {
+      cy.contains('Space Is The Place');
+      cy.contains('Edit').click();
+    });
+
+    cy.contains('**You cannot edit the key after creating the space.');
+    cy.get('button[data-testid="delete-space-button"]').click();
+
+    cy.contains('Are you sure you want to delete the "space_place" space?');
+    cy.get('button[data-testid="delete-space-button"]').click();
+
+    cy.get('div[data-testid="card-space_place"]').should('not.exist');
+
+    cy.get('button[data-testid="logout-button"]').click();
+    cy.contains('Are you sure you want to sign out?');
+    cy.get('button[type="submit"]').click();
   });
 });

@@ -32,7 +32,7 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
               alignItems: 'center',
             }}
           >
-            <Heading sx={{ my: 3 }} as="h1">
+            <Heading data-testid="create-space-heading" sx={{ my: 3 }} as="h1">
               Create A Space
             </Heading>
             {/* <img src={user.image} alt="profile pic" /> */}
@@ -69,7 +69,9 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
                   ref={register}
                 ></textarea>
               </Box>
-              <Button type="submit">Submit</Button>
+              <Button data-testid="create-space-button" type="submit">
+                Create
+              </Button>
             </Grid>
           </form>
         </Box>

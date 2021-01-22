@@ -3,12 +3,12 @@ import Router from 'next/router';
 import { getSession, Session } from 'next-auth/client';
 import { Box, Heading, Flex, Button } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
-interface EditSpaceFormProps {
+interface DeleteSpaceFormProps {
   admin: boolean;
   space: string;
 }
 
-const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
+const DeleteSpaceForm: React.FC<DeleteSpaceFormProps> = ({ admin, space }) => {
   if (!admin) {
     console.log('need to do something');
   }
@@ -29,7 +29,9 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 alignItems: 'center',
               }}
             >
-              <Button onClick={() => deleteSpace(space)}>Delete</Button>
+              <Button data-testid="delete-space-button" onClick={() => deleteSpace(space)}>
+                Delete
+              </Button>
               <Button onClick={() => Router.back()}>Cancel</Button>
             </Flex>
           </Flex>
@@ -39,11 +41,11 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
   );
 };
 
-export default CreateSpaceForm;
+export default DeleteSpaceForm;
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<EditSpaceFormProps>> => {
+): Promise<GetServerSidePropsResult<DeleteSpaceFormProps>> => {
   const adminEmails: string = process.env.ADMIN_EMAILS;
   const session: Session = await getSession(context);
   const space = String(context.params.space);
