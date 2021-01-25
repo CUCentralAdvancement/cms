@@ -149,6 +149,7 @@ export const getServerSideProps = async (
 
 async function updateSpace(data: CreateSpaceInputs): Promise<void> {
   try {
+    // @todo Switch this to be relative or take into account the baseURL.
     const result = await fetch(`http://localhost:3000/api/space/${data.spaceKey}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

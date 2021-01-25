@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 // User Info..
 
 model Account {
@@ -51,6 +50,8 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
 
+  @@index([email], name: "email")
+
   @@map(name: "users")
 }
 
@@ -80,11 +81,34 @@ model Space {
 
 // IR20 space.
 
-// model StoryIR20 {
-//   id        Int     @default(autoincrement()) @id
-//   title     String
-//   content   String?
-//   published Boolean @default(false)
-//   author    User?   @relation(fields: [authorId], references: [id])
-//   authorId  Int?
-// }
+model Story_IR20 {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  subtitle  String
+  slug      String  @unique
+  content   String
+  priority  Int
+  campus    Campus_tag
+  interest  Interest_tag
+  main_image_pid String
+  main_image_meta Json
+  card_image_pid String
+  card_image_meta Json
+  related_stories Story_IR20[]
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+enum Campus_tag {
+  Anschutz
+  Boulder
+  Denver 
+  UCCS
+}
+
+enum Interest_tag {
+  Research
+  Society 
+  Students
+}
