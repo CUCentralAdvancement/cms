@@ -72,32 +72,53 @@ model Space {
   id       Int     @default(autoincrement()) @id
   label    String
   key      String  @unique
-  image    String
+  color    String?
+  image    Image?
   active   Boolean
   members  String  @default("alex.finnarn@gmail.com") 
 
   @@map(name: "spaces")
 }
 
-// IR20 space.
+model Image {
+  id            Int     @default(autoincrement()) @id
+  file_name     String
+  public_id     String
+  asset_id      String  @unique
+  resource_type String
+  src           String
+  thumbnail     String
+  format        String
+  height        Int
+  width         Int
 
-model Story_IR20 {
+  @@map(name: "images")
+}
+
+// Content types.
+
+model Post {
   id        Int     @default(autoincrement()) @id
+  type      Post_types
   title     String
   subtitle  String
   slug      String  @unique
-  content   String
+  content   Component[]
   priority  Int
   campus    Campus_tag
   interest  Interest_tag
-  main_image_pid String
-  main_image_meta Json
-  card_image_pid String
-  card_image_meta Json
-  related_stories Story_IR20[]
+  main_image Image?
+  related_stories Post[]
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
+
+  @@map(name: "posts")
+}
+
+enum Post_types {
+  IR20_Story
+  Fund
 }
 
 enum Campus_tag {
@@ -111,4 +132,19 @@ enum Interest_tag {
   Research
   Society 
   Students
+}
+
+model Component {
+  id        Int     @default(autoincrement()) @id
+  label     String
+  props     Json
+  type      Component_types
+
+  @@map(name: "components")
+}
+
+enum Component_types {
+  Text
+  Image
+  Quote
 }

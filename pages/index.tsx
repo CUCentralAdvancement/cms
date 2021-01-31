@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/client';
 import { Box, Heading, Flex, Grid } from 'theme-ui';
 import AdminLayout from '../components/global/AdminLayout';
 import { defaultUser, UserSelect } from '../data/types';
-import prisma from '../lib/prisma';
+import prisma from '../prisma/prisma';
 interface ProfileProps {
   user: UserSelect;
 }

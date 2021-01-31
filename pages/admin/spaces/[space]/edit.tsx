@@ -1,7 +1,8 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
 import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
@@ -13,11 +14,46 @@ interface EditSpaceFormProps {
 }
 
 const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
+  const [spaceImage, setSpaceImage] = useState(space.image);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
+    data.spaceImage = spaceImage;
     updateSpace(data);
   };
+
+  function openCloudinary(e) {
+    e.preventDefault();
+    const myWidget = cloudinary.createUploadWidget(
+      {
+        cloudName: process.env.NEXT_PUBLIC_CLOUD_NAME,
+        uploadPreset: 'doody_burgers',
+        cropping: true,
+      },
+      (error, result) => {
+        if (!error && result && result.event === 'success') {
+          console.log('Done! Here is the image info: ', result.info);
+          setSpaceImage({
+            file_name: String(result.original_filename),
+            public_id: String(result.public_id),
+            asset_id: String(result.asset_id),
+            resource_type: String(result.resource_type),
+            src: String(result.secure_url),
+            thumbnail: String(result.thumbnail_url),
+            format: String(result.format),
+            height: Number(result.height),
+            width: Number(result.width),
+          });
+          myWidget.close();
+        }
+      }
+    );
+    myWidget.open();
+  }
+
+  useEffect(() => {
+    loadCloudinary();
+  }, []);
 
   if (!admin) {
     console.log('need to do something');
@@ -71,14 +107,35 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
               </Box>
               <Box>
-                <Label htmlFor="spaceImage">Space Image</Label>
-                <input
-                  defaultValue={space.image}
-                  name="spaceImage"
-                  ref={register}
-                  spellCheck
-                  size={80}
-                />
+                <Flex
+                  sx={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    p: 3,
+                  }}
+                >
+                  <Box>
+                    <Label htmlFor="spaceImage">Space Image</Label>
+                    <input
+                      defaultValue={spaceImage.src}
+                      name="spaceImage"
+                      ref={register}
+                      spellCheck
+                      size={50}
+                    />
+                  </Box>
+                  <Box>
+                    <Button
+                      id="upload_widget"
+                      className="cloudinary-button"
+                      onClick={(e) => openCloudinary(e)}
+                    >
+                      Upload file?
+                    </Button>
+                  </Box>
+                </Flex>
               </Box>
               <Box>
                 <Label htmlFor="spaceActive">Is Space Active?</Label>
@@ -161,4 +218,12 @@ async function updateSpace(data: CreateSpaceInputs): Promise<void> {
   } catch (error) {
     console.error(error);
   }
+}
+
+function loadCloudinary() {
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
+  const body = document.getElementsByTagName('body')[0];
+  body.appendChild(script);
 }

@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next';
-import prisma from '../../../lib/prisma';
+import prisma from '../../../prisma/prisma';
 import { getSession } from 'next-auth/client';
 import { CreateSpaceInputs } from '../../../data/types';
 
