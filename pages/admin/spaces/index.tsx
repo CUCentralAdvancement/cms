@@ -33,7 +33,6 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
                 </Button>
               </a>
             </Link>
-            <Button onClick={() => seedy()}>Seed Spaces</Button>
           </Flex>
           <Grid gap={2} columns={[1, 2, 3]} sx={{ maxWidth: 1280, mx: 'auto' }}>
             {spaces.map((space) => {
@@ -41,7 +40,7 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
                 <Card key={space.id} data-testid={`card-${space.key}`}>
                   <AspectRatio ratio={16 / 9}>
                     <Image
-                      src={space.image.src}
+                      src={space.image?.src}
                       sx={{
                         objectFit: 'cover',
                       }}
@@ -90,35 +89,7 @@ export const getServerSideProps = async (
     return;
   }
 
-  const spaces = await prisma.space.findMany();
+  const spaces = await prisma.space.findMany({ include: { image: true } });
 
   return { props: { spaces } };
 };
-
-async function seedy() {
-  const ir20 = await prisma.space.upsert({
-    where: { key: 'ir20' },
-    update: {},
-    create: {
-      label: 'Example',
-      key: 'example',
-      color: '#000000',
-      image: {
-        create: {
-          file_name: '',
-          public_id: '',
-          asset_id: '',
-          resource_type: '',
-          src: '',
-          thumbnail: '',
-          format: '',
-          height: 1,
-          width: 1,
-        },
-      },
-      active: true,
-      members: 'alex.finnarn@gmail.com,john@doe.com',
-    },
-  });
-  console.log({ ir20 });
-}

@@ -17,6 +17,7 @@ const handleUpdateSpace: NextApiHandler = async (req, res) => {
     res.end(JSON.stringify({ error: 'Unauthorized Access' }));
   }
 
+  console.log(data);
   if (req.method === 'PUT') {
     const space = await prisma.space.update({
       where: { key: String(spackeKey) },
@@ -25,7 +26,19 @@ const handleUpdateSpace: NextApiHandler = async (req, res) => {
         label: data.spaceLabel,
         // @todo Add color to the Space model.
         // color: data.spaceColor,
-        image: data.spaceImage,
+        image: {
+          create: {
+            file_name: data.spaceImage.file_name,
+            public_id: data.spaceImage.public_id,
+            asset_id: data.spaceImage.asset_id,
+            resource_type: data.spaceImage.resource_type,
+            src: data.spaceImage.src,
+            thumbnail: data.spaceImage.thumbnail,
+            format: data.spaceImage.format,
+            height: data.spaceImage.height,
+            width: data.spaceImage.width,
+          },
+        },
         active: data.spaceActive,
         members: data.spaceMembers,
       },

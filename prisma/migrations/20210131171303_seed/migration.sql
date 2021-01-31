@@ -71,9 +71,9 @@ CREATE TABLE "spaces" (
     "label" TEXT NOT NULL,
     "key" TEXT NOT NULL,
     "color" TEXT,
+    "imageId" INTEGER,
     "active" BOOLEAN NOT NULL,
     "members" TEXT NOT NULL DEFAULT E'alex.finnarn@gmail.com',
-    "imageId" INTEGER,
 
     PRIMARY KEY ("id")
 );
@@ -104,10 +104,10 @@ CREATE TABLE "posts" (
     "priority" INTEGER NOT NULL,
     "campus" "Campus_tag" NOT NULL,
     "interest" "Interest_tag" NOT NULL,
+    "main_image_id" INTEGER,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" INTEGER,
     "postId" INTEGER,
-    "imageId" INTEGER,
 
     PRIMARY KEY ("id")
 );
@@ -154,16 +154,22 @@ CREATE UNIQUE INDEX "verification_requests.token_unique" ON "verification_reques
 CREATE UNIQUE INDEX "spaces.key_unique" ON "spaces"("key");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "spaces_imageId_unique" ON "spaces"("imageId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "images.asset_id_unique" ON "images"("asset_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "posts.slug_unique" ON "posts"("slug");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "posts_main_image_id_unique" ON "posts"("main_image_id");
+
 -- AddForeignKey
 ALTER TABLE "spaces" ADD FOREIGN KEY("imageId")REFERENCES "images"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "posts" ADD FOREIGN KEY("imageId")REFERENCES "images"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "posts" ADD FOREIGN KEY("main_image_id")REFERENCES "images"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "posts" ADD FOREIGN KEY("authorId")REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;

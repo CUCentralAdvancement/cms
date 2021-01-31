@@ -73,7 +73,8 @@ model Space {
   label    String
   key      String  @unique
   color    String?
-  image    Image?
+  image    Image?  @relation(fields: [imageId], references: [id])
+  imageId  Int?
   active   Boolean
   members  String  @default("alex.finnarn@gmail.com") 
 
@@ -91,6 +92,8 @@ model Image {
   format        String
   height        Int
   width         Int
+  space         Space?
+  post          Post?
 
   @@map(name: "images")
 }
@@ -107,7 +110,8 @@ model Post {
   priority  Int
   campus    Campus_tag
   interest  Interest_tag
-  main_image Image?
+  main_image Image?  @relation(fields: [main_image_id], references: [id])
+  main_image_id Int?
   related_stories Post[]
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])

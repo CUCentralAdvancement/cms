@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
+import { Box, Heading, Flex, Grid, Button, Label, Text, Image } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
 import { useForm } from 'react-hook-form';
 import { CreateSpaceInputs, Space, defaultSpace } from '../../../../data/types';
@@ -14,11 +14,11 @@ interface EditSpaceFormProps {
 }
 
 const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
-  const [spaceImage, setSpaceImage] = useState(space.image);
+  const [spImage, setSpImage] = useState(space.image);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
-    data.spaceImage = spaceImage;
+    data.spaceImage = spImage;
     updateSpace(data);
   };
 
@@ -28,23 +28,25 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
       {
         cloudName: process.env.NEXT_PUBLIC_CLOUD_NAME,
         uploadPreset: 'doody_burgers',
-        cropping: true,
+        sources: ['local', 'url', 'image_search', 'dropbox', 'instagram', 'google_drive'],
+        googleApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+        searchBySites: ['giving.cu.edu', 'www.cu.edu', 'essential.cu.edu'],
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
-          console.log('Done! Here is the image info: ', result.info);
-          setSpaceImage({
-            file_name: String(result.original_filename),
-            public_id: String(result.public_id),
-            asset_id: String(result.asset_id),
-            resource_type: String(result.resource_type),
-            src: String(result.secure_url),
-            thumbnail: String(result.thumbnail_url),
-            format: String(result.format),
-            height: Number(result.height),
-            width: Number(result.width),
+          console.log('Done! Here is the image info: ', result);
+          setSpImage({
+            file_name: String(result.info.original_filename),
+            public_id: String(result.info.public_id),
+            asset_id: String(result.info.asset_id),
+            resource_type: String(result.info.resource_type),
+            src: String(result.info.secure_url),
+            thumbnail: String(result.info.thumbnail_url),
+            format: String(result.info.format),
+            height: Number(result.info.height),
+            width: Number(result.info.width),
           });
-          myWidget.close();
+          // myWidget.close();
         }
       }
     );
@@ -119,12 +121,16 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                   <Box>
                     <Label htmlFor="spaceImage">Space Image</Label>
                     <input
-                      defaultValue={spaceImage.src}
+                      defaultValue={spImage?.src}
                       name="spaceImage"
                       ref={register}
                       spellCheck
                       size={50}
                     />
+                    <Box sx={{ mt: 2, maxWidth: '300px' }}>
+                      <Text sx={{ p: 2 }}>{`File Name: ${spImage?.file_name}`}</Text>
+                      <Image src={spImage?.src} alt={spImage?.file_name} />
+                    </Box>
                   </Box>
                   <Box>
                     <Button
@@ -199,6 +205,7 @@ export const getServerSideProps = async (
 
   const space: Space = await prisma.space.findUnique({
     where: { key: String(context.params.space) },
+    include: { image: true },
   });
 
   return { props: { admin: true, space } };
