@@ -37,7 +37,8 @@ export interface Space {
   members: string;
 }
 
-interface Image {
+export interface Image {
+  id: number;
   file_name: string;
   public_id: string;
   asset_id: string;
@@ -55,6 +56,7 @@ export const defaultSpace: Space = {
   key: 'example',
   color: '#000',
   image: {
+    id: 1,
     file_name: '',
     public_id: '',
     asset_id: '',

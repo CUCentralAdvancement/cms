@@ -4,54 +4,25 @@ import Link from 'next/link';
 import Router from 'next/router';
 import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button, Label, Text, Image } from 'theme-ui';
+import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
+import ImageInput from '../../../../components/forms/ImageInput';
+import { loadCloudinary } from '../../../../utils/cloudinary';
 import { useForm } from 'react-hook-form';
-import { CreateSpaceInputs, Space, defaultSpace } from '../../../../data/types';
+import { CreateSpaceInputs, Space, defaultSpace, Image as ImageType } from '../../../../data/types';
 interface EditSpaceFormProps {
   admin: boolean;
   space: Space;
 }
 
 const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
-  const [spImage, setSpImage] = useState(space.image);
+  const [spImage, setSpImage] = useState<ImageType>(space.image);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
     data.spaceImage = spImage;
     updateSpace(data);
   };
-
-  function openCloudinary(e) {
-    e.preventDefault();
-    const myWidget = cloudinary.createUploadWidget(
-      {
-        cloudName: process.env.NEXT_PUBLIC_CLOUD_NAME,
-        uploadPreset: 'doody_burgers',
-        sources: ['local', 'url', 'image_search', 'dropbox', 'instagram', 'google_drive'],
-        googleApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-        searchBySites: ['giving.cu.edu', 'www.cu.edu', 'essential.cu.edu'],
-      },
-      (error, result) => {
-        if (!error && result && result.event === 'success') {
-          console.log('Done! Here is the image info: ', result);
-          setSpImage({
-            file_name: String(result.info.original_filename),
-            public_id: String(result.info.public_id),
-            asset_id: String(result.info.asset_id),
-            resource_type: String(result.info.resource_type),
-            src: String(result.info.secure_url),
-            thumbnail: String(result.info.thumbnail_url),
-            format: String(result.info.format),
-            height: Number(result.info.height),
-            width: Number(result.info.width),
-          });
-          // myWidget.close();
-        }
-      }
-    );
-    myWidget.open();
-  }
 
   useEffect(() => {
     loadCloudinary();
@@ -109,39 +80,12 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
               </Box>
               <Box>
-                <Flex
-                  sx={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    border: '1px solid #ccc',
-                    p: 3,
-                  }}
-                >
-                  <Box>
-                    <Label htmlFor="spaceImage">Space Image</Label>
-                    <input
-                      defaultValue={spImage?.src}
-                      name="spaceImage"
-                      ref={register}
-                      spellCheck
-                      size={50}
-                    />
-                    <Box sx={{ mt: 2, maxWidth: '300px' }}>
-                      <Text sx={{ p: 2 }}>{`File Name: ${spImage?.file_name}`}</Text>
-                      <Image src={spImage?.src} alt={spImage?.file_name} />
-                    </Box>
-                  </Box>
-                  <Box>
-                    <Button
-                      id="upload_widget"
-                      className="cloudinary-button"
-                      onClick={(e) => openCloudinary(e)}
-                    >
-                      Upload file?
-                    </Button>
-                  </Box>
-                </Flex>
+                <ImageInput
+                  setImage={setSpImage}
+                  register={register}
+                  image={spImage}
+                  name="spaceImage"
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceActive">Is Space Active?</Label>
@@ -225,12 +169,4 @@ async function updateSpace(data: CreateSpaceInputs): Promise<void> {
   } catch (error) {
     console.error(error);
   }
-}
-
-function loadCloudinary() {
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
-  const body = document.getElementsByTagName('body')[0];
-  body.appendChild(script);
 }
