@@ -27,7 +27,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, mainBg }) => {
           <Box
             sx={{
               flex: '1 0 auto',
-              bg: mainBg ?? 'inherit',
+              bg: mainBg ?? '#f5f1e5',
             }}
             as="main"
           >

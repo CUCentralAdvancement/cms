@@ -1,20 +1,29 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { getSession } from 'next-auth/client';
 import { Box, Heading, Flex, Grid, Button, Label } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
+import ImageInput from '../../../components/forms/ImageInput';
 import { useForm } from 'react-hook-form';
 import { CreateSpaceInputs } from '../../../data/types';
+import { loadCloudinary } from '../../../utils/cloudinary';
 interface CreateSpaceFormProps {
   admin: boolean;
 }
 
 const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
+  const [spImage, setSpImage] = useState(null);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
+    data.spaceImage = spImage;
     createSpace(data);
   };
+
+  useEffect(() => {
+    loadCloudinary();
+  }, []);
 
   if (!admin) {
     console.log('need to do something');
@@ -32,7 +41,7 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
               alignItems: 'center',
             }}
           >
-            <Heading sx={{ my: 3 }} as="h1">
+            <Heading data-testid="create-space-heading" sx={{ my: 3 }} as="h1">
               Create A Space
             </Heading>
             {/* <img src={user.image} alt="profile pic" /> */}
@@ -52,8 +61,12 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
                 <input type="color" name="spaceColor" ref={register} />
               </Box>
               <Box>
-                <Label htmlFor="spaceImage">Space Image</Label>
-                <input name="spaceImage" ref={register} spellCheck size={80} />
+                <ImageInput
+                  setImage={setSpImage}
+                  register={register}
+                  image={spImage}
+                  name="spaceImage"
+                />
               </Box>
               <Box>
                 <Label htmlFor="spaceActive">Is Space Active?</Label>
@@ -69,7 +82,9 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
                   ref={register}
                 ></textarea>
               </Box>
-              <Button type="submit">Submit</Button>
+              <Button data-testid="create-space-button" type="submit">
+                Create
+              </Button>
             </Grid>
           </form>
         </Box>

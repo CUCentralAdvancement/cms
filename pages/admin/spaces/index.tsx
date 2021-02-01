@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
 import { Box, Heading, Flex, Grid, Card, Image, AspectRatio, Button } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
-import prisma from '../../../lib/prisma';
+import prisma from '../../../prisma/prisma';
 import { Space } from '../../../data/types';
 import Link from 'next/link';
 
@@ -23,20 +23,24 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
               mb: 3,
             }}
           >
-            <Heading as="h1">Spaces Admin</Heading>
+            <Heading data-testid="spaces-admin-heading" as="h1">
+              Spaces Admin
+            </Heading>
             <Link href="/admin/spaces/create">
               <a>
-                <Button sx={{ fontSize: 4 }}>Create Space +</Button>
+                <Button data-testid="create-space-button" sx={{ fontSize: 4, boxShadow: 'card' }}>
+                  Create Space +
+                </Button>
               </a>
             </Link>
           </Flex>
           <Grid gap={2} columns={[1, 2, 3]} sx={{ maxWidth: 1280, mx: 'auto' }}>
             {spaces.map((space) => {
               return (
-                <Card key={space.id} sx={{}}>
+                <Card key={space.id} data-testid={`card-${space.key}`}>
                   <AspectRatio ratio={16 / 9}>
                     <Image
-                      src={space.image}
+                      src={space.image?.src}
                       sx={{
                         objectFit: 'cover',
                       }}
@@ -85,7 +89,7 @@ export const getServerSideProps = async (
     return;
   }
 
-  const spaces = await prisma.space.findMany();
+  const spaces = await prisma.space.findMany({ include: { image: true } });
 
   return { props: { spaces } };
 };

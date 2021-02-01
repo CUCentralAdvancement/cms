@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Box } from 'theme-ui';
+import prisma from '../../../prisma/prisma';
 import AdminLayout from '../../../components/global/AdminLayout';
 
 interface ContentItem {
@@ -31,11 +32,15 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
   // Get space from context.
   const space = String(context.params?.space);
+  // const contentTypes = sp.getContentTypes(space);
 
-  const content: Array<ContentItem> = [
-    { id: 1, title: 'Story One' },
-    { id: 2, title: 'Story Two' },
-    { id: 3, title: 'Story Three' },
-  ];
+  const content = await prisma.post.findMany({});
   return { props: { content, space } };
 }
+
+// const sp = {
+//   getContentTypes: (space: string) => {
+//     console.log(space);
+//     return ['post'];
+//   },
+// };

@@ -1,23 +1,32 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
 import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
+import ImageInput from '../../../../components/forms/ImageInput';
+import { loadCloudinary } from '../../../../utils/cloudinary';
 import { useForm } from 'react-hook-form';
-import { CreateSpaceInputs, Space, defaultSpace } from '../../../../data/types';
+import { CreateSpaceInputs, Space, defaultSpace, Image as ImageType } from '../../../../data/types';
 interface EditSpaceFormProps {
   admin: boolean;
   space: Space;
 }
 
 const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
+  const [spImage, setSpImage] = useState<ImageType>(space.image);
   const { handleSubmit, register } = useForm<CreateSpaceInputs>();
   const onSubmit = (data: CreateSpaceInputs) => {
     console.log(data);
+    data.spaceImage = spImage;
     updateSpace(data);
   };
+
+  useEffect(() => {
+    loadCloudinary();
+  }, []);
 
   if (!admin) {
     console.log('need to do something');
@@ -71,13 +80,11 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
               </Box>
               <Box>
-                <Label htmlFor="spaceImage">Space Image</Label>
-                <input
-                  defaultValue={space.image}
+                <ImageInput
+                  setImage={setSpImage}
+                  register={register}
+                  image={spImage}
                   name="spaceImage"
-                  ref={register}
-                  spellCheck
-                  size={80}
                 />
               </Box>
               <Box>
@@ -142,6 +149,7 @@ export const getServerSideProps = async (
 
   const space: Space = await prisma.space.findUnique({
     where: { key: String(context.params.space) },
+    include: { image: true },
   });
 
   return { props: { admin: true, space } };
@@ -149,6 +157,7 @@ export const getServerSideProps = async (
 
 async function updateSpace(data: CreateSpaceInputs): Promise<void> {
   try {
+    // @todo Switch this to be relative or take into account the baseURL.
     const result = await fetch(`http://localhost:3000/api/space/${data.spaceKey}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
