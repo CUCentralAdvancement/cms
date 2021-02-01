@@ -9,15 +9,14 @@ interface ContentItem {
 }
 interface ContentOverviewProps {
   content: Array<ContentItem>;
-  space: string;
 }
 
-const ContentOverview: React.FC<ContentOverviewProps> = ({ content, space }) => {
+const ContentOverview: React.FC<ContentOverviewProps> = ({ content }) => {
   return (
     <>
       <AdminLayout>
         <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3, bg: 'gray' }}>
-          <h1>{`Content Overview for the ${space} space`}</h1>
+          <h1>{`Content Overview for the "Fund Admin" space`}</h1>
           <ul>{content && content.map((item) => <li key={item.id}>{item.title}</li>)}</ul>
         </Box>
       </AdminLayout>
@@ -27,15 +26,11 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ content, space }) => 
 
 export default ContentOverview;
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
-  // Get space from context.
-  const space = String(context.params?.space);
-  // const contentTypes = sp.getContentTypes(space);
-
-  const content = await prisma.post.findMany({});
-  return { props: { content, space } };
+export async function getServerSideProps(): Promise<
+  GetServerSidePropsResult<ContentOverviewProps>
+> {
+  const content = await prisma.fund.findMany({});
+  return { props: { content } };
 }
 
 // const sp = {

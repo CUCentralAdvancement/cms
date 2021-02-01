@@ -2,10 +2,7 @@
 CREATE TYPE "Post_types" AS ENUM ('IR20_Story', 'Fund');
 
 -- CreateEnum
-CREATE TYPE "Campus_tag" AS ENUM ('Anschutz', 'Boulder', 'Denver', 'UCCS');
-
--- CreateEnum
-CREATE TYPE "Interest_tag" AS ENUM ('Research', 'Society', 'Students');
+CREATE TYPE "Campus_tags" AS ENUM ('Anschutz', 'Boulder', 'Denver', 'System', 'UCCS');
 
 -- CreateEnum
 CREATE TYPE "Component_types" AS ENUM ('Text', 'Image', 'Quote');
@@ -102,8 +99,6 @@ CREATE TABLE "posts" (
     "subtitle" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "priority" INTEGER NOT NULL,
-    "campus" "Campus_tag" NOT NULL,
-    "interest" "Interest_tag" NOT NULL,
     "main_image_id" INTEGER,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" INTEGER,
@@ -119,6 +114,34 @@ CREATE TABLE "components" (
     "props" JSONB NOT NULL,
     "type" "Component_types" NOT NULL,
     "postId" INTEGER,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "funds" (
+"id" SERIAL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "featured_fund" BOOLEAN NOT NULL,
+    "priority_fund" BOOLEAN NOT NULL,
+    "active" BOOLEAN NOT NULL,
+    "allocation_code" TEXT NOT NULL,
+    "cu_fund_id" TEXT NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FundContent" (
+"id" SERIAL,
+    "keywords" TEXT,
+    "interest" TEXT,
+    "fund_type" TEXT,
+    "default_amount" INTEGER,
+    "campus" "Campus_tags" NOT NULL,
+    "fundId" INTEGER NOT NULL,
+    "postId" INTEGER NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -165,6 +188,18 @@ CREATE UNIQUE INDEX "posts.slug_unique" ON "posts"("slug");
 -- CreateIndex
 CREATE UNIQUE INDEX "posts_main_image_id_unique" ON "posts"("main_image_id");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "funds.allocation_code_unique" ON "funds"("allocation_code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "funds.cu_fund_id_unique" ON "funds"("cu_fund_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "FundContent_fundId_unique" ON "FundContent"("fundId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "FundContent_postId_unique" ON "FundContent"("postId");
+
 -- AddForeignKey
 ALTER TABLE "spaces" ADD FOREIGN KEY("imageId")REFERENCES "images"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -179,3 +214,9 @@ ALTER TABLE "posts" ADD FOREIGN KEY("postId")REFERENCES "posts"("id") ON DELETE 
 
 -- AddForeignKey
 ALTER TABLE "components" ADD FOREIGN KEY("postId")REFERENCES "posts"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FundContent" ADD FOREIGN KEY("fundId")REFERENCES "funds"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FundContent" ADD FOREIGN KEY("postId")REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;

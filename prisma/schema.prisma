@@ -92,8 +92,9 @@ model Image {
   format        String
   height        Int
   width         Int
-  space         Space?
-  post          Post?
+  
+  ignore_space         Space?
+  ignore_post          Post?
 
   @@map(name: "images")
 }
@@ -108,34 +109,17 @@ model Post {
   slug      String  @unique
   content   Component[]
   priority  Int
-  campus    Campus_tag
-  interest  Interest_tag
+  // tags      Post_tags[]
   main_image Image?  @relation(fields: [main_image_id], references: [id])
   main_image_id Int?
-  related_stories Post[]
+  related_posts Post[]
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 
+  ignore_fundC FundContent?
+
   @@map(name: "posts")
-}
-
-enum Post_types {
-  IR20_Story
-  Fund
-}
-
-enum Campus_tag {
-  Anschutz
-  Boulder
-  Denver 
-  UCCS
-}
-
-enum Interest_tag {
-  Research
-  Society 
-  Students
 }
 
 model Component {
@@ -145,6 +129,51 @@ model Component {
   type      Component_types
 
   @@map(name: "components")
+}
+
+model Fund {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  description     String
+  featured_fund  Boolean
+  priority_fund  Boolean
+  active  Boolean
+  // This should be a number but cannot be since the leading zero.
+  allocation_code String @unique
+  cu_fund_id String @unique
+  // Can make null for "off" insted of two fields.
+
+  // author    User?   @relation(fields: [authorId], references: [id])
+  // authorId  Int?
+  content FundContent?
+
+  @@map(name: "funds")
+}
+
+model FundContent {
+  id        Int     @default(autoincrement()) @id
+  keywords String?
+  interest String?
+  fund_type String?
+  default_amount Int?
+  campus Campus_tags
+  fund Fund @relation(fields: [fundId], references: [id])
+  fundId  Int
+  post Post @relation(fields: [postId], references: [id])
+  postId  Int
+}
+
+enum Post_types {
+  IR20_Story
+  Fund
+}
+
+enum Campus_tags {
+  Anschutz
+  Boulder
+  Denver
+  System 
+  UCCS
 }
 
 enum Component_types {
