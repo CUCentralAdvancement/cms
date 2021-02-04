@@ -116,6 +116,7 @@ model Post {
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
 
   ignore_fundC FundContent?
 
@@ -161,6 +162,8 @@ model FundContent {
   fundId  Int
   post Post @relation(fields: [postId], references: [id])
   postId  Int
+  published Boolean @default(false)
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
 }
 
 enum Post_types {
