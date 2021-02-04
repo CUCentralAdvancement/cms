@@ -15,6 +15,10 @@ module.exports = {
   ignorePatterns: ['node_modules/*', '.next/*', '.out/*'],
   // Mainly covering Cypress tests and config files by default.
   extends: ['eslint:recommended', 'plugin:cypress/recommended', 'plugin:react/recommended'],
+  rules: {
+    // We will use TypeScript's types for component props instead.
+    'react/prop-types': 'off',
+  },
   overrides: [
     // This configuration will apply to all TypeScript files and React components.
     {

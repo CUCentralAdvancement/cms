@@ -22,7 +22,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, mainBg }) => {
       {session && (
         <Flex sx={{ flexDirection: 'column', height: '100vh' }}>
           <Box sx={{ flexShrink: 0 }}>
-            <AdminHeader primaryLinks={[{ href: '/admin/spaces', label: 'Spaces' }]} />
+            <AdminHeader
+              primaryLinks={[
+                { href: '/admin/spaces', label: 'Spaces' },
+                { href: '/spaces/fund_admin/content', label: 'Content' },
+              ]}
+            />
           </Box>
           <Box
             sx={{
