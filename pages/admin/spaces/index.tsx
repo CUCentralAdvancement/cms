@@ -15,10 +15,15 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
       <AdminLayout>
         <div className="conatiner mx-auto mt-4 p-3">
           <div className="flex flex-row justify-between items-center mb-3">
-            <h1 data-testid="spaces-admin-heading">Spaces Admin</h1>
+            <h1 className="text-xl pl-3" data-testid="spaces-admin-heading">
+              Spaces Admin
+            </h1>
             <Link href="/admin/spaces/create">
               <a>
-                <button className="shadow text-lg" data-testid="create-space-button">
+                <button
+                  className="shadow text-lg bg-gold text-white rounded p-3"
+                  data-testid="create-space-button"
+                >
                   Create Space +
                 </button>
               </a>
