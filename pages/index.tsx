@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid } from 'theme-ui';
 import AdminLayout from '../components/global/AdminLayout';
 import { defaultUser, UserSelect } from '../data/types';
 import prisma from '../prisma/prisma';
@@ -10,30 +9,15 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
   return (
-    <>
-      <AdminLayout>
-        <Box sx={{ maxWidth: '1280px', mx: 'auto', mt: 4, p: 3 }}>
-          <Flex
-            sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Heading data-testid="user-name" as="h1">{`Welcome ${user.name}!`}</Heading>
-            <img data-testid="user-image" src={user.image} alt="profile pic" />
-          </Flex>
-          <Heading sx={{ my: 3 }} as="h2">
-            Spaces
-          </Heading>
-          <Grid gap={2} columns={[1, 2, 4]} sx={{ maxWidth: 1280, mx: 'auto' }}>
-            {/* {user.spaces.map((el) => {
-              return <span key={el}>{spaceConfig[el].label}</span>;
-            })} */}
-          </Grid>
-        </Box>
-      </AdminLayout>
-    </>
+    <AdminLayout>
+      <div className="container mx-auto mt-4 p-3">
+        <div className="flex flex-row justify-between items-center">
+          <h1 data-testid="user-name">{`Welcome ${user.name}!`}</h1>
+          <img data-testid="user-image" src={user.image} alt="profile pic" />
+        </div>
+        <h2 className="my-3">Spaces</h2>
+      </div>
+    </AdminLayout>
   );
 };
 

@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Card, Image, AspectRatio, Button } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 import prisma from '../../../prisma/prisma';
 import { Space } from '../../../data/types';
@@ -14,59 +13,43 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
   return (
     <>
       <AdminLayout>
-        <Box sx={{ maxWidth: '1280px', mx: 'auto', mt: 4, p: 3 }}>
-          <Flex
-            sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mb: 3,
-            }}
-          >
-            <Heading data-testid="spaces-admin-heading" as="h1">
-              Spaces Admin
-            </Heading>
+        <div className="conatiner mx-auto mt-4 p-3">
+          <div className="flex flex-row justify-between items-center mb-3">
+            <h1 data-testid="spaces-admin-heading">Spaces Admin</h1>
             <Link href="/admin/spaces/create">
               <a>
-                <Button data-testid="create-space-button" sx={{ fontSize: 4, boxShadow: 'card' }}>
+                <button className="shadow text-lg" data-testid="create-space-button">
                   Create Space +
-                </Button>
+                </button>
               </a>
             </Link>
-          </Flex>
-          <Grid gap={2} columns={[1, 2, 3]} sx={{ maxWidth: 1280, mx: 'auto' }}>
+          </div>
+          <div className="container mx-auto grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {spaces.map((space) => {
               return (
-                <Card key={space.id} data-testid={`card-${space.key}`}>
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      src={space.image?.src}
-                      sx={{
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </AspectRatio>
-                  <Flex
-                    sx={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      mt: 2,
-                      p: 1,
-                    }}
-                  >
-                    <Heading as="h2">{space.label}</Heading>
+                <div
+                  className="p-2 shadow rounded"
+                  key={space.id}
+                  data-testid={`card-${space.key}`}
+                >
+                  <img
+                    className="object-cover"
+                    src={space.image?.src}
+                    alt={space.image?.file_name}
+                  />
+                  <div className="flex flex-row justify-between items-center mt-2 p-1">
+                    <h2>{space.label}</h2>
                     <Link as={`/admin/spaces/${space.key}/edit`} href="/admin/spaces/[space]/edit">
                       <a>
-                        <Button>Edit</Button>
+                        <button className="p-3 bg-blue-600 rounded shadow text-white">Edit</button>
                       </a>
                     </Link>
-                  </Flex>
-                </Card>
+                  </div>
+                </div>
               );
             })}
-          </Grid>
-        </Box>
+          </div>
+        </div>
       </AdminLayout>
     </>
   );
