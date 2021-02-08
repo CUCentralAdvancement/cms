@@ -36,7 +36,9 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ content, slug }) => {
             </ul>
           </div>
           <div className="flex flex-col items-center justify-between p-3  ">
-            <p className="p-4 my-3 border-gray-300 border rounded lg:min-w-full">Some stuff</p>
+            <p className="p-4 my-3 border-gray-300 border rounded lg:min-w-full flex flex-row justify-between">
+              Some stuff
+            </p>
             {addContent && (
               <p className="p-4 border-gray-300 border rounded lg:min-w-full flex flex-row justify-between">
                 <span>Add some stuff</span>
