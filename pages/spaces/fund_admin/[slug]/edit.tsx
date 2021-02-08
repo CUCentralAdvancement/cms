@@ -7,12 +7,12 @@ interface ContentItem {
   title: string;
   id: number;
 }
-interface ContentOverviewProps {
+interface EditContentProps {
   content: Array<ContentItem>;
   slug: string;
 }
 
-const ContentOverview: React.FC<ContentOverviewProps> = ({ content, slug }) => {
+const EditContent: React.FC<EditContentProps> = ({ content, slug }) => {
   console.log(content);
   return (
     <>
@@ -39,11 +39,11 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ content, slug }) => {
   );
 };
 
-export default ContentOverview;
+export default EditContent;
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
+): Promise<GetServerSidePropsResult<EditContentProps>> {
   const content = await prisma.post.findMany({});
   const slug = String(context.params.slug);
   return { props: { content, slug } };

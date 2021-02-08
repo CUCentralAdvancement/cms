@@ -25,7 +25,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, mainBg }) => {
         />
       </div>
       <main style={mainBg ? { backgroundColor: mainBg } : null} className="flex-auto bg-yellow-50">
-        <div className="transition-opacity duration-500">{children}</div>
+        <div className="transition-opacity duration-500 ease-in">{children}</div>
       </main>
       <div className="flex-shrink-0">
         <Footer />

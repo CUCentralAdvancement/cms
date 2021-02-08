@@ -37,6 +37,7 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
                   key={space.id}
                   data-testid={`card-${space.key}`}
                 >
+                  {/*eslint-disable-next-line jsx-a11y/img-redundant-alt*/}
                   <img
                     className="object-cover"
                     src={space.image?.src}

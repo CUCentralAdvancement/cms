@@ -8,12 +8,12 @@ interface ContentItem {
   title: string;
   id: number;
 }
-interface ContentOverviewProps {
+interface EditLayoutProps {
   content: Array<ContentItem>;
   slug: string;
 }
 
-const ContentOverview: React.FC<ContentOverviewProps> = ({ content, slug }) => {
+const EditLayout: React.FC<EditLayoutProps> = ({ content, slug }) => {
   const [addContent, setAddContent] = useState(false);
   console.log(content);
   return (
@@ -66,11 +66,11 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ content, slug }) => {
   );
 };
 
-export default ContentOverview;
+export default EditLayout;
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<ContentOverviewProps>> {
+): Promise<GetServerSidePropsResult<EditLayoutProps>> {
   const content = await prisma.post.findMany({});
   const slug = String(context.params.slug);
   return { props: { content, slug } };
