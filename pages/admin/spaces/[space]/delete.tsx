@@ -1,7 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Router from 'next/router';
 import { getSession, Session } from 'next-auth/client';
-import { Box, Heading, Flex, Button } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
 interface DeleteSpaceFormProps {
   admin: boolean;
@@ -16,26 +15,17 @@ const DeleteSpaceForm: React.FC<DeleteSpaceFormProps> = ({ admin, space }) => {
   return (
     <>
       <AdminLayout>
-        <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3 }}>
-          {/* {message && <Message>{message}</Message>} */}
-          <Flex sx={{ flexDirection: 'column' }}>
-            <Heading sx={{ my: 3 }} as="h1">
-              {`Are you sure you want to delete the "${space}" space?`}
-            </Heading>
-            <Flex
-              sx={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Button data-testid="delete-space-button" onClick={() => deleteSpace(space)}>
+        <div className="max-w-screen-sm mx-auto mt-4 p-3">
+          <div className="flex flex-col">
+            <h1 className="my-3">{`Are you sure you want to delete the "${space}" space?`}</h1>
+            <div className="flex flex-row justify-between items-center">
+              <button data-testid="delete-space-button" onClick={() => deleteSpace(space)}>
                 Delete
-              </Button>
-              <Button onClick={() => Router.back()}>Cancel</Button>
-            </Flex>
-          </Flex>
-        </Box>
+              </button>
+              <button onClick={() => Router.back()}>Cancel</button>
+            </div>
+          </div>
+        </div>
       </AdminLayout>
     </>
   );

@@ -102,6 +102,7 @@ CREATE TABLE "posts" (
     "main_image_id" INTEGER,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" INTEGER,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "postId" INTEGER,
 
     PRIMARY KEY ("id")
@@ -142,6 +143,8 @@ CREATE TABLE "FundContent" (
     "campus" "Campus_tags" NOT NULL,
     "fundId" INTEGER NOT NULL,
     "postId" INTEGER NOT NULL,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY ("id")
 );

@@ -2,14 +2,6 @@ import React from 'react';
 import { useTable, useSortBy, useAsyncDebounce, useGlobalFilter, useFilters } from 'react-table';
 import { matchSorter } from 'match-sorter';
 
-const ThTrStyles = {
-  margin: 0,
-  padding: '0.5rem',
-  borderBottom: '1px solid black',
-  borderRight: '1px solid black',
-  width: '1%',
-};
-
 function Table({ columns, data, initialState = {} }) {
   const filterTypes = React.useMemo(
     () => ({
@@ -65,28 +57,11 @@ function Table({ columns, data, initialState = {} }) {
   const firstPageRows = rows.slice(0, 20);
 
   return (
-    <div
-      style={{
-        display: 'block',
-        maxWidth: '100%',
-        overflowX: 'scroll',
-        overflowY: 'hidden',
-        borderRight: '1px solid black',
-        borderBottom: '1px solid black',
-        borderTop: '2px solid black',
-        borderLeft: '2px solid black',
-        backgroundColor: '#bebfb9',
-      }}
-    >
-      <table {...getTableProps()} style={{ width: '100%', borderSpacing: 0 }}>
+    <>
+      <table {...getTableProps()} className="table-auto">
         <thead>
           <tr>
-            <th
-              colSpan={visibleColumns.length}
-              style={{
-                textAlign: 'left',
-              }}
-            >
+            <th colSpan={visibleColumns.length} className="p-3 text-left">
               <GlobalFilter
                 preGlobalFilteredRows={preGlobalFilteredRows}
                 globalFilter={state.globalFilter}
@@ -117,11 +92,11 @@ function Table({ columns, data, initialState = {} }) {
               <tr
                 key={row.id}
                 {...row.getRowProps()}
-                style={i % 2 == 0 ? { backgroundColor: '#fff' } : { backgroundColor: '#f3f4ee' }}
+                className={i % 2 == 0 ? 'bg-white' : 'bg-gray-200'}
               >
                 {row.cells.map((cell) => {
                   return (
-                    <td key={cell.id} style={ThTrStyles} {...cell.getCellProps()}>
+                    <td className="p-3" key={cell.id} {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </td>
                   );
@@ -133,11 +108,9 @@ function Table({ columns, data, initialState = {} }) {
       </table>
       <br />
       <div>Showing the first 20 results of {rows.length} rows</div>
-    </div>
+    </>
   );
 }
-
-function App() {}
 
 export default Table;
 

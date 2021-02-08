@@ -2,7 +2,6 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { getSession } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button, Label } from 'theme-ui';
 import AdminLayout from '../../../components/global/AdminLayout';
 import ImageInput from '../../../components/forms/ImageInput';
 import { useForm } from 'react-hook-form';
@@ -32,48 +31,40 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
   return (
     <>
       <AdminLayout>
-        <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3 }}>
-          {/* {message && <Message>{message}</Message>} */}
-          <Flex
-            sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Heading data-testid="create-space-heading" sx={{ my: 3 }} as="h1">
+        <div className="container mx-auto mt-4 p-3">
+          <div className="flex flex-row justify-between items-center">
+            <h1 className="my-3" data-testid="create-space-heading">
               Create A Space
-            </Heading>
-            {/* <img src={user.image} alt="profile pic" /> */}
-          </Flex>
+            </h1>
+          </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid gap={3}>
-              <Box>
-                <Label htmlFor="spaceLabel">Space Label</Label>
+            <div className="grid grid-cols-1 gap-3">
+              <div>
+                <label htmlFor="spaceLabel">Space Label</label>
                 <input name="spaceLabel" ref={register} spellCheck size={80} />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceKey">Space Key</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceKey">Space Key</label>
                 <input name="spaceKey" ref={register} spellCheck size={80} />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceColor">Space Background Color</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceColor">Space Background Color</label>
                 <input type="color" name="spaceColor" ref={register} />
-              </Box>
-              <Box>
+              </div>
+              <div>
                 <ImageInput
                   setImage={setSpImage}
                   register={register}
                   image={spImage}
                   name="spaceImage"
                 />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceActive">Is Space Active?</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceActive">Is Space Active?</label>
                 <input type="checkbox" name="spaceActive" ref={register} />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceMembers">Members</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceMembers">Members</label>
                 <textarea
                   cols={69}
                   rows={3}
@@ -81,13 +72,13 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
                   defaultValue="alex.finnarn@gmail.com"
                   ref={register}
                 ></textarea>
-              </Box>
-              <Button data-testid="create-space-button" type="submit">
+              </div>
+              <button data-testid="create-space-button" type="submit">
                 Create
-              </Button>
-            </Grid>
+              </button>
+            </div>
           </form>
-        </Box>
+        </div>
       </AdminLayout>
     </>
   );

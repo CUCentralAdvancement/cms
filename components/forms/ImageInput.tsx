@@ -1,4 +1,3 @@
-import { Box, Flex, Button, Label, Text, Image } from 'theme-ui';
 import { LegacyRef, FormEvent } from 'react';
 import { Image as ImageType } from '../../data/types';
 
@@ -45,29 +44,22 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, register, setImage, name
   }
 
   return (
-    <Flex
-      sx={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        border: '1px solid #ccc',
-        p: 3,
-      }}
-    >
-      <Box>
-        <Label htmlFor={name}>Space Image</Label>
+    <div className="p-3 flex flex-row justify-between items-center border border-solid border-light-blue-500">
+      <div>
+        <label htmlFor={name}>Space Image</label>
         <input defaultValue={image?.src} name={name} ref={register} spellCheck size={50} />
-        <Box sx={{ mt: 2, maxWidth: '300px' }}>
-          <Text sx={{ p: 2 }}>{`File Name: ${image?.file_name}`}</Text>
-          <Image src={image?.src} alt={image?.file_name} />
-        </Box>
-      </Box>
-      <Box>
-        <Button id="upload_widget" className="cloudinary-button" onClick={(e) => openCloudinary(e)}>
+        <div className="mt-2 max-w-md">
+          <p className="p-2">{`File Name: ${image?.file_name}`}</p>
+          {/*eslint-disable-next-line jsx-a11y/img-redundant-alt*/}
+          <img src={image?.src} alt={image?.file_name} />
+        </div>
+      </div>
+      <div>
+        <button id="upload_widget" className="cloudinary-button" onClick={(e) => openCloudinary(e)}>
           Upload file?
-        </Button>
-      </Box>
-    </Flex>
+        </button>
+      </div>
+    </div>
   );
 };
 

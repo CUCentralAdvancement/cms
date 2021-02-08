@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Router from 'next/router';
 import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
-import { Box, Heading, Flex, Grid, Button, Label, Text } from 'theme-ui';
 import AdminLayout from '../../../../components/global/AdminLayout';
 import ImageInput from '../../../../components/forms/ImageInput';
 import { loadCloudinary } from '../../../../utils/cloudinary';
@@ -35,96 +34,91 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
   return (
     <>
       <AdminLayout>
-        <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 4, p: 3 }}>
-          {/* {message && <Message>{message}</Message>} */}
-          <Flex
-            sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Heading sx={{ my: 3 }} as="h1">
-              {`Edit ${space.label} Space`}
-            </Heading>
-            {/* <img src={user.image} alt="profile pic" /> */}
-          </Flex>
+        <div className="container mx-auto mt-4 p-3">
+          <div className="flex justify-between items-center">
+            <h1 className="my-3">{`Edit ${space.label} Space`}</h1>
+          </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid gap={3}>
-              <Box>
-                <Label htmlFor="spaceLabel">Space Label</Label>
+            <div className="grid grid-cols-1 gap-3">
+              <div>
+                <label className="mr-2" htmlFor="spaceLabel">
+                  Space Label
+                </label>
                 <input
                   defaultValue={space.label}
                   name="spaceLabel"
+                  className="focus:ring-2 focus:ring-blue-600"
                   ref={register}
                   spellCheck
                   size={80}
                 />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceKey">Space Key</Label>
-                <Text sx={{ p: 1, color: 'darkred' }}>
+              </div>
+              <div>
+                <label htmlFor="spaceKey">Space Key</label>
+                <span className="p-2 text-red-700">
                   **You cannot edit the key after creating the space.
-                </Text>
+                </span>
                 <input
                   defaultValue={space.key}
                   readOnly
                   name="spaceKey"
+                  className="focus:ring-2 focus:ring-blue-600"
                   ref={register}
                   spellCheck
                   size={80}
                 />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceColor">Space Background Color</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceColor">Space Background Color</label>
                 <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
-              </Box>
-              <Box>
+              </div>
+              <div>
                 <ImageInput
                   setImage={setSpImage}
                   register={register}
                   image={spImage}
                   name="spaceImage"
                 />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceActive">Is Space Active?</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceActive">Is Space Active?</label>
                 <input
                   defaultChecked={space.active}
                   type="checkbox"
+                  className="p-2 checked:bg-blue-600 checked:border-transparent"
                   name="spaceActive"
                   ref={register}
                 />
-              </Box>
-              <Box>
-                <Label htmlFor="spaceMembers">Members</Label>
+              </div>
+              <div>
+                <label htmlFor="spaceMembers">Members</label>
                 <textarea
                   cols={69}
                   rows={3}
                   name="spaceMembers"
+                  className="focus:ring-2 focus:ring-blue-600"
                   defaultValue={space.members}
                   ref={register}
                 ></textarea>
-              </Box>
-              <Flex
-                sx={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Button type="submit">Update</Button>
+              </div>
+              <div className="flex flex-row justify-between items-center">
+                <button className="p-3 bg-blue-600 rounded shadow text-white" type="submit">
+                  Update
+                </button>
                 <Link as={`/admin/spaces/${space.key}/delete`} href="/admin/spaces/[space]/delete">
                   <a>
-                    <Button variant="button.secondary" data-testid="delete-space-button">
+                    <button
+                      className="p-3 bg-red-600 rounded shadow text-white"
+                      data-testid="delete-space-button"
+                    >
                       Delete
-                    </Button>
+                    </button>
                   </a>
                 </Link>
-              </Flex>
-            </Grid>
+              </div>
+            </div>
           </form>
-        </Box>
+        </div>
       </AdminLayout>
     </>
   );

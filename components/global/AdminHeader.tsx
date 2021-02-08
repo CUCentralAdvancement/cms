@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { Flex, Box, Button } from 'theme-ui';
 import { Link as LinkType } from '../../data/types';
 import { useSession } from 'next-auth/client';
 interface AdminHeaderProps {
@@ -10,19 +9,8 @@ interface AdminHeaderProps {
 const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
   const [session] = useSession();
   return (
-    <Flex
-      as="header"
-      sx={{
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        variant: 'styles.header',
-        backgroundColor: '#000',
-        color: '#fff',
-        p: 1,
-        flexDirection: ['column', 'row'],
-      }}
-    >
-      <Box>
+    <header className="p-1 flex flex-col md:flex-row justify-between items-center bg-black text-white">
+      <div>
         {primaryLinks &&
           primaryLinks.map((el, index) => {
             return (
@@ -31,23 +19,20 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ primaryLinks }) => {
               </NavLink>
             );
           })}
-      </Box>
-      <Flex sx={{ justifyContent: 'space-between' }}>
+      </div>
+      <div className="flex justify-between">
         <Link href="/">
           <a>
-            <img
-              style={{ marginRight: '12px', paddingTop: '6px' }}
-              height="50px"
-              src={session.user.image}
-              alt="profile"
-            />
+            <img className="mr-3 pt-2 h-12 rounded-full" src={session.user.image} alt="profile" />
           </a>
         </Link>
         <Link href="/api/auth/signout">
-          <Button data-testid="logout-button">Log Out</Button>
+          <button className="bg-gold p-2 text-white rounded" data-testid="logout-button">
+            Log Out
+          </button>
         </Link>
-      </Flex>
-    </Flex>
+      </div>
+    </header>
   );
 };
 
@@ -59,16 +44,7 @@ interface NavLinkProps {
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   return (
     <Link href={href}>
-      <a
-        style={{
-          padding: '1rem',
-          color: '#fff',
-          textDecoration: 'none',
-          fontSize: 20,
-        }}
-      >
-        {children}
-      </a>
+      <a className="p-4 text-white no-underline text-base">{children}</a>
     </Link>
   );
 };
