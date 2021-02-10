@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Router from 'next/router';
 import { getSession, Session } from 'next-auth/client';
-import AdminLayout from '../../../../components/global/AdminLayout';
+import AdminLayout from '../../../../components/layout/AdminLayout';
 interface DeleteSpaceFormProps {
   admin: boolean;
   space: string;
@@ -15,7 +15,7 @@ const DeleteSpaceForm: React.FC<DeleteSpaceFormProps> = ({ admin, space }) => {
   return (
     <>
       <AdminLayout>
-        <div className="max-w-screen-sm mx-auto mt-4 p-3">
+        <div className="container mx-auto mt-4 p-3">
           <div className="flex flex-col">
             <h1 className="my-3">{`Are you sure you want to delete the "${space}" space?`}</h1>
             <div className="flex flex-row justify-between items-center">

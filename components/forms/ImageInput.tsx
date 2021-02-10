@@ -4,11 +4,12 @@ import { Image as ImageType } from '../../data/types';
 interface ImageInputProps {
   image: ImageType;
   name: string;
+  label: string;
   register: LegacyRef<HTMLInputElement>;
   setImage: Function;
 }
 
-const ImageInput: React.FC<ImageInputProps> = ({ image, register, setImage, name }) => {
+const ImageInput: React.FC<ImageInputProps> = ({ image, register, setImage, name, label }) => {
   const cloudinary = (window as any).cloudinary;
 
   function openCloudinary(e: FormEvent<EventTarget>) {
@@ -45,11 +46,19 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, register, setImage, name
 
   return (
     <div className="p-3 flex flex-row justify-between items-center border border-solid border-light-blue-500">
-      <div>
-        <label htmlFor={name}>Space Image</label>
-        <input defaultValue={image?.src} name={name} ref={register} spellCheck size={50} />
-        <div className="mt-2 max-w-md">
-          <p className="p-2">{`File Name: ${image?.file_name}`}</p>
+      <div className="w-1/2">
+        <label className="mr-2" htmlFor={name}>
+          {label}
+        </label>
+        <input
+          className="min-w-full"
+          type="text"
+          defaultValue={image?.src}
+          name={name}
+          ref={register}
+        />
+        <div className="mt-2">
+          <p>{`File Name: ${image?.file_name}`}</p>
           {/*eslint-disable-next-line jsx-a11y/img-redundant-alt*/}
           <img src={image?.src} alt={image?.file_name} />
         </div>

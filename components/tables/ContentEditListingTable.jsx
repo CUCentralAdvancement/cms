@@ -59,25 +59,34 @@ function Table({ columns, data, initialState = {} }) {
   return (
     <>
       <table {...getTableProps()} className="table-auto">
-        <thead>
-          <tr>
-            <th colSpan={visibleColumns.length} className="p-3 text-left">
+        <thead className="">
+          {/* <tr>
+            <th colSpan={visibleColumns.length} className="text-left py-2">
               <GlobalFilter
                 preGlobalFilteredRows={preGlobalFilteredRows}
                 globalFilter={state.globalFilter}
                 setGlobalFilter={setGlobalFilter}
               />
             </th>
-          </tr>
+          </tr> */}
           {headerGroups.map((headerGroup) => (
-            <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              key={headerGroup.id}
+              {...headerGroup.getHeaderGroupProps()}
+              className="align-baseline"
+            >
               {headerGroup.headers.map((column) => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
-                <th key={column.id} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  key={column.id}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className="py-2"
+                >
                   {column.render('Header')}
                   {/* Add a sort direction indicator */}
                   <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
+                  {/* <hr /> */}
                   {/* Render the columns filter UI */}
                   <div>{column.canFilter ? column.render('Filter') : null}</div>
                 </th>
@@ -85,15 +94,11 @@ function Table({ columns, data, initialState = {} }) {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody {...getTableBodyProps()} className="">
           {firstPageRows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr
-                key={row.id}
-                {...row.getRowProps()}
-                className={i % 2 == 0 ? 'bg-white' : 'bg-gray-200'}
-              >
+              <tr key={row.id} {...row.getRowProps()} className="bg-white even:bg-gray-200 py-2">
                 {row.cells.map((cell) => {
                   return (
                     <td className="p-3" key={cell.id} {...cell.getCellProps()}>
@@ -124,7 +129,7 @@ function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) 
 
   return (
     <span>
-      Search:{' '}
+      <label>Search All Records: </label>
       <input
         value={value || ''}
         onChange={(e) => {
@@ -132,11 +137,8 @@ function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) 
           onChange(e.target.value);
         }}
         placeholder={`${count} records...`}
-        size="40"
-        style={{
-          fontSize: '1.1rem',
-          border: '0',
-        }}
+        type="text"
+        className="min-w-full"
       />
     </span>
   );
@@ -160,6 +162,8 @@ function DefaultColumnFilter({ column: { filterValue, preFilteredRows, setFilter
         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
       }}
       placeholder={`Search ${count} records...`}
+      type="text"
+      className="min-w-full"
     />
   );
 }

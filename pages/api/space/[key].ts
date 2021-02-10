@@ -27,16 +27,21 @@ const handleUpdateSpace: NextApiHandler = async (req, res) => {
         // @todo Add color to the Space model.
         // color: data.spaceColor,
         image: {
-          create: {
-            file_name: data.spaceImage.file_name,
-            public_id: data.spaceImage.public_id,
-            asset_id: data.spaceImage.asset_id,
-            resource_type: data.spaceImage.resource_type,
-            src: data.spaceImage.src,
-            thumbnail: data.spaceImage.thumbnail,
-            format: data.spaceImage.format,
-            height: data.spaceImage.height,
-            width: data.spaceImage.width,
+          connectOrCreate: {
+            where: {
+              asset_id: data.spaceImage.asset_id,
+            },
+            create: {
+              file_name: data.spaceImage.file_name,
+              public_id: data.spaceImage.public_id,
+              asset_id: data.spaceImage.asset_id,
+              resource_type: data.spaceImage.resource_type,
+              src: data.spaceImage.src,
+              thumbnail: data.spaceImage.thumbnail,
+              format: data.spaceImage.format,
+              height: data.spaceImage.height,
+              width: data.spaceImage.width,
+            },
           },
         },
         active: data.spaceActive,

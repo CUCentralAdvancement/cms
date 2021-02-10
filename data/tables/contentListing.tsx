@@ -1,25 +1,32 @@
 import { SelectColumnFilter } from '../../components/tables/Filters';
+import Link from 'next/link';
 
 export const defaultColumns = [
+  {
+    Header: 'Allocation Code',
+    accessor: 'allocation_code',
+    filter: 'fuzzyText',
+  },
   {
     Header: 'Title',
     accessor: 'title',
     filter: 'fuzzyText',
   },
   {
-    Header: 'Type',
-    accessor: 'type',
-    Filter: SelectColumnFilter,
-    filter: 'includes',
-  },
-  {
     Header: 'Author',
     accessor: 'author',
     filter: 'fuzzyText',
   },
+
   {
-    Header: 'Published',
-    accessor: 'published',
+    Header: 'Campus',
+    accessor: 'campus',
+    Filter: SelectColumnFilter,
+    filter: 'includes',
+  },
+  {
+    Header: 'Active',
+    accessor: 'active',
     Filter: SelectColumnFilter,
     filter: 'includes',
   },
@@ -30,9 +37,13 @@ export const defaultColumns = [
   },
   {
     Header: 'Operations',
-    accessor: 'operations',
+    accessor: 'id',
     disableFilters: true,
     disableSortBy: true,
-    Cell: ({ cell: { value } }) => <a href={`${value}/edit`}>Edit</a>,
+    Cell: ({ cell: { value } }) => (
+      <Link as={`content/${value}/edit`} href={`./content/[id]/edit`}>
+        <a>Edit</a>
+      </Link>
+    ),
   },
 ];

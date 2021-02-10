@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { getSession } from 'next-auth/client';
-import AdminLayout from '../../../components/global/AdminLayout';
+import AdminLayout from '../../../components/layout/AdminLayout';
 import ImageInput from '../../../components/forms/ImageInput';
 import { useForm } from 'react-hook-form';
 import { CreateSpaceInputs } from '../../../data/types';
@@ -32,11 +32,9 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
     <>
       <AdminLayout>
         <div className="container mx-auto mt-4 p-3">
-          <div className="flex flex-row justify-between items-center">
-            <h1 className="my-3" data-testid="create-space-heading">
-              Create A Space
-            </h1>
-          </div>
+          <h1 className="my-3" data-testid="create-space-heading">
+            Create A Space
+          </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-3">
               <div>

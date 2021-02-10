@@ -1,3 +1,5 @@
+import { Campus_tags, User } from '@prisma/client';
+
 export const defaultUser: UserSelect = {
   id: 99,
   name: 'John Doe',
@@ -70,3 +72,28 @@ export const defaultSpace: Space = {
   active: true,
   members: 'alex.finnarn@gmail.com,john@doe.com',
 };
+
+export interface FundEditContentSelect {
+  id: number;
+  allocation_code: string;
+  title: string;
+  author: string;
+  updated_at: string;
+  active: boolean;
+  campus: Campus_tags;
+}
+
+export interface EditFundsInputs {
+  id: number;
+  title: string;
+  allocation_code: string;
+  description: string;
+  active: boolean;
+  featured_fund: boolean;
+  priority_fund: boolean;
+  campus: Campus_tags;
+  default_amount: number;
+  fund_type: string;
+  interest: string;
+  keywords: string;
+}
