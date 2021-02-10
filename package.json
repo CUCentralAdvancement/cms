@@ -10,7 +10,7 @@
     "cy:open": "cypress open",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "migrate": "prisma migrate dev --preview-feature",
+    "migrate": "prisma migrate dev -n seed --preview-feature",
     "gen": "prisma generate",
     "reset": "rm -rf ./prisma/migrations/* && DATABASE_URL=postgres://postgres:ralphie@localhost:5434/postgres yarn migrate && yarn gen"
   },

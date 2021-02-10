@@ -4,7 +4,7 @@ describe('Spaces CRUD Operation Tests', function () {
   //   cy.visit('/admin/ir20/content');
   // });
 
-  xit('should be able to create, edit, and delete a space', () => {
+  xit('should be able to edit, a space', () => {
     cy.visit('/');
     cy.contains('Login!!').click();
     cy.contains('Sign in with Auth0').click();
@@ -16,7 +16,11 @@ describe('Spaces CRUD Operation Tests', function () {
     cy.get('a[href="/admin/spaces"]').contains('Spaces').click();
 
     cy.get('h1[data-testid="spaces-admin-heading"]').contains('Spaces Admin');
-    cy.get('button[data-testid="create-space-button"]').click();
+
+    cy.get('div[data-testid="card-space_place"]').within(() => {
+      cy.contains('Space Is The Place');
+      cy.contains('Edit').click();
+    });
 
     cy.get('h1[data-testid="create-space-heading"]').contains('Create A Space');
     cy.get('input[name="spaceLabel"]').type('Space Is The Place');
@@ -34,10 +38,6 @@ describe('Spaces CRUD Operation Tests', function () {
     cy.get('button[data-testid="create-space-button"]').click();
 
     cy.url().should('eq', 'http://localhost:3000/admin/spaces');
-    cy.get('div[data-testid="card-space_place"]').within(() => {
-      cy.contains('Space Is The Place');
-      cy.contains('Edit').click();
-    });
 
     cy.contains('**You cannot edit the key after creating the space.');
     cy.get('button[data-testid="delete-space-button"]').click();
