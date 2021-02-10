@@ -50,10 +50,13 @@ const handleUpdateSpace: NextApiHandler = async (req, res) => {
     });
     res.json(space);
   } else if (req.method === 'DELETE') {
-    const space = await prisma.space.delete({
-      where: { key: String(spackeKey) },
-    });
-    res.json(space);
+    throw new Error(
+      `The HTTP ${req.method} method is temporarily disabled at this route. Fund creation/deletion is handled in external systems.`
+    );
+    // const space = await prisma.space.delete({
+    //   where: { key: String(spackeKey) },
+    // });
+    // res.json(space);
   } else {
     throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
   }

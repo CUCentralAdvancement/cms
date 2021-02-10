@@ -4,6 +4,7 @@ import AdminLayout from '../../../components/layout/AdminLayout';
 import prisma from '../../../prisma/prisma';
 import { Space } from '../../../data/types';
 import Link from 'next/link';
+import Heading from '../../../components/global/Heading';
 
 interface SpacesAdminProps {
   spaces: Array<Space>;
@@ -14,21 +15,7 @@ const SpacesAdmin: React.FC<SpacesAdminProps> = ({ spaces }) => {
     <>
       <AdminLayout>
         <div className="conatiner mx-auto mt-4 p-3">
-          <div className="flex flex-row justify-between items-center mb-3">
-            <h1 className="text-xl pl-3" data-testid="spaces-admin-heading">
-              Spaces Admin
-            </h1>
-            <Link href="/admin/spaces/create">
-              <a>
-                <button
-                  className="shadow text-lg bg-gold text-white rounded p-3"
-                  data-testid="create-space-button"
-                >
-                  Create Space +
-                </button>
-              </a>
-            </Link>
-          </div>
+          <Heading as="h1">Spaces Admin</Heading>
           <div className="container mx-auto grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {spaces.map((space) => {
               return (

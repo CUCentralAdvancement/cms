@@ -23,7 +23,7 @@ const EditLayout: React.FC<EditLayoutProps> = ({ content, slug }) => {
       <AdminLayout>
         <div className="container mx-auto p-4">
           <ContentNavigation slug={slug} currentAction="layout" />
-          <Heading as="h1">{`Editing "${content.title}" Layout`}</Heading>
+          <Heading as="h1">{`Editing "${content.post.title}" Layout`}</Heading>
           <div className="flex flex-col items-center justify-between p-3  ">
             <div className="p-4 my-3 border-gray-300 border rounded lg:min-w-full flex flex-row justify-between">
               Some stuff

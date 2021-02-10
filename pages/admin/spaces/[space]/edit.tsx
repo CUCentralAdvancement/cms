@@ -78,16 +78,6 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 <button className="p-3 bg-blue-600 rounded shadow text-white" type="submit">
                   Update
                 </button>
-                <Link as={`/admin/spaces/${space.key}/delete`} href="/admin/spaces/[space]/delete">
-                  <a>
-                    <button
-                      className="p-3 bg-red-600 rounded shadow text-white"
-                      data-testid="delete-space-button"
-                    >
-                      Delete
-                    </button>
-                  </a>
-                </Link>
               </div>
             </div>
           </form>
