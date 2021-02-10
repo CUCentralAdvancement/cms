@@ -40,6 +40,7 @@ export const defaultColumns = [
     accessor: 'id',
     disableFilters: true,
     disableSortBy: true,
+    // eslint-disable-next-line
     Cell: ({ cell: { value } }) => (
       <Link as={`content/${value}/edit`} href={`./content/[id]/edit`}>
         <a>Edit</a>

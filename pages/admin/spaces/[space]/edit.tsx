@@ -57,6 +57,7 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
                 register={register}
                 image={spImage}
                 name="spaceImage"
+                label="Space Image"
               />
 
               <Checkbox

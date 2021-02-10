@@ -1,4 +1,4 @@
-import { Campus_tags, User } from '@prisma/client';
+import { Campus_tags } from '@prisma/client';
 
 export const defaultUser: UserSelect = {
   id: 99,

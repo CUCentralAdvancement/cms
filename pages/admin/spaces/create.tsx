@@ -55,6 +55,7 @@ const CreateSpaceForm: React.FC<CreateSpaceFormProps> = ({ admin }) => {
                   register={register}
                   image={spImage}
                   name="spaceImage"
+                  label="Space Image"
                 />
               </div>
               <div>
