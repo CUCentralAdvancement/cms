@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["createMany"]
 }
 
 datasource db {
@@ -105,20 +106,22 @@ model Post {
   id        Int     @default(autoincrement()) @id
   type      Post_types
   title     String
-  subtitle  String
-  slug      String  @unique
+  subtitle  String?
+  slug      String?  @unique
   content   Component[]
-  priority  Int
-  // tags      Post_tags[]
+  priority   Int       @default(1)
+  updated_at  DateTime @default(now())
+
+  // Relations.
   main_image Image?  @relation(fields: [main_image_id], references: [id])
   main_image_id Int?
   related_posts Post[]
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
-  updatedAt  DateTime @default(now()) @map(name: "updated_at")
 
-  ignore_fundC FundContent?
+  // Needed m:m relation.
+  ignore_fund Fund?
 
   @@map(name: "posts")
 }
@@ -134,36 +137,28 @@ model Component {
 
 model Fund {
   id        Int     @default(autoincrement()) @id
+  // Allocation code should be a number but cannot be since the leading zero.
+  allocation_code String @unique
   title     String
   description     String
   featured_fund  Boolean
   priority_fund  Boolean
-  active  Boolean
-  // This should be a number but cannot be since the leading zero.
-  allocation_code String @unique
-  cu_fund_id String @unique
-  // Can make null for "off" insted of two fields.
-
-  // author    User?   @relation(fields: [authorId], references: [id])
-  // authorId  Int?
-  content FundContent?
-
-  @@map(name: "funds")
-}
-
-model FundContent {
-  id        Int     @default(autoincrement()) @id
+  active  Boolean @default(false)
+  cu_fund_id String? @unique
   keywords String?
   interest String?
   fund_type String?
   default_amount Int?
   campus Campus_tags
-  fund Fund @relation(fields: [fundId], references: [id])
-  fundId  Int
-  post Post @relation(fields: [postId], references: [id])
-  postId  Int
-  published Boolean @default(false)
-  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+  updated_at  DateTime @default(now())
+
+  // Relations.
+  post Post? @relation(fields: [postId], references: [id])
+  postId  Int?
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  
+  @@map(name: "funds")
 }
 
 enum Post_types {
@@ -183,4 +178,5 @@ enum Component_types {
   Text
   Image
   Quote
+  Field
 }

@@ -4,8 +4,11 @@ import Link from 'next/link';
 import Router from 'next/router';
 import prisma from '../../../../prisma/prisma';
 import { getSession, Session } from 'next-auth/client';
-import AdminLayout from '../../../../components/global/AdminLayout';
+import AdminLayout from '../../../../components/layout/AdminLayout';
 import ImageInput from '../../../../components/forms/ImageInput';
+import TextInput from '../../../../components/forms/TextInput';
+import TextArea from '../../../../components/forms/TextArea';
+import Checkbox from '../../../../components/forms/Checkbox';
 import { loadCloudinary } from '../../../../utils/cloudinary';
 import { useForm } from 'react-hook-form';
 import { CreateSpaceInputs, Space, defaultSpace, Image as ImageType } from '../../../../data/types';
@@ -35,72 +38,42 @@ const CreateSpaceForm: React.FC<EditSpaceFormProps> = ({ admin, space }) => {
     <>
       <AdminLayout>
         <div className="container mx-auto mt-4 p-3">
-          <div className="flex justify-between items-center">
-            <h1 className="my-3">{`Edit ${space.label} Space`}</h1>
-          </div>
+          <h1 className="my-3 text-2xl">{`Edit ${space.label} Space`}</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 gap-3">
-              <div>
-                <label className="mr-2" htmlFor="spaceLabel">
-                  Space Label
-                </label>
-                <input
-                  defaultValue={space.label}
-                  name="spaceLabel"
-                  className="focus:ring-2 focus:ring-blue-600"
-                  ref={register}
-                  spellCheck
-                  size={80}
-                />
-              </div>
-              <div>
-                <label htmlFor="spaceKey">Space Key</label>
-                <span className="p-2 text-red-700">
-                  **You cannot edit the key after creating the space.
-                </span>
-                <input
-                  defaultValue={space.key}
-                  readOnly
-                  name="spaceKey"
-                  className="focus:ring-2 focus:ring-blue-600"
-                  ref={register}
-                  spellCheck
-                  size={80}
-                />
-              </div>
-              <div>
-                <label htmlFor="spaceColor">Space Background Color</label>
-                <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
-              </div>
-              <div>
-                <ImageInput
-                  setImage={setSpImage}
-                  register={register}
-                  image={spImage}
-                  name="spaceImage"
-                />
-              </div>
-              <div>
-                <label htmlFor="spaceActive">Is Space Active?</label>
-                <input
-                  defaultChecked={space.active}
-                  type="checkbox"
-                  className="p-2 checked:bg-blue-600 checked:border-transparent"
-                  name="spaceActive"
-                  ref={register}
-                />
-              </div>
-              <div>
-                <label htmlFor="spaceMembers">Members</label>
-                <textarea
-                  cols={69}
-                  rows={3}
-                  name="spaceMembers"
-                  className="focus:ring-2 focus:ring-blue-600"
-                  defaultValue={space.members}
-                  ref={register}
-                ></textarea>
-              </div>
+            <div className="grid grid-flow-row auto-rows-max gap-3">
+              <TextInput
+                value={space.label}
+                name="spaceLabel"
+                label="Space Label"
+                register={register}
+              />
+              <TextInput value={space.key} name="spaceKey" label="Space Key" register={register} />
+
+              <label htmlFor="spaceColor">Space Background Color</label>
+              <input defaultValue={space.color} type="color" name="spaceColor" ref={register} />
+
+              <ImageInput
+                setImage={setSpImage}
+                register={register}
+                image={spImage}
+                name="spaceImage"
+                label="Space Image"
+              />
+
+              <Checkbox
+                value={space.active}
+                name="spaceActive"
+                label="Active?"
+                register={register}
+              />
+
+              <TextArea
+                value={space.members}
+                name="spaceMembers"
+                label="Members"
+                register={register}
+              />
+
               <div className="flex flex-row justify-between items-center">
                 <button className="p-3 bg-blue-600 rounded shadow text-white" type="submit">
                   Update

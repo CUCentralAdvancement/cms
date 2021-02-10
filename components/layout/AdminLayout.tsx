@@ -40,7 +40,7 @@ const LoginPrompt: React.FC = () => {
   return (
     <div className="flex flex-col justify-between items-center text-lg max-w-4xl mx-auto mt-4">
       <img width="640px" src="/logo.svg" alt="CU Advancement Logo" />
-      <h1 className="my-5 p-2">Hello, and welcome to the CMS!</h1>
+      <h1 className="my-5 p-2 text-2xl">Hello, and welcome to the CMS!</h1>
       <Link href="/api/auth/signin">
         <button className="p-3 bg-gold text-white rounded shadow">Login!!</button>
       </Link>

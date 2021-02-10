@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import AdminLayout from '../../../components/global/AdminLayout';
+import AdminLayout from '../../../components/layout/AdminLayout';
 import prisma from '../../../prisma/prisma';
 import { Space } from '../../../data/types';
 import Link from 'next/link';

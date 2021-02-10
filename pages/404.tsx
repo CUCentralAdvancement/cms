@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import AdminLayout from '../components/global/AdminLayout';
+import AdminLayout from '../components/layout/AdminLayout';
 
 const Custom404: React.FC = () => {
   return (

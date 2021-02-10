@@ -9,7 +9,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['even', 'odd'],
+    },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };

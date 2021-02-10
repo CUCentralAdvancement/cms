@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/client';
-import AdminLayout from '../components/global/AdminLayout';
+import AdminLayout from '../components/layout/AdminLayout';
 import { defaultUser, UserSelect } from '../data/types';
 import prisma from '../prisma/prisma';
 interface ProfileProps {
@@ -12,7 +12,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     <AdminLayout>
       <div className="container mx-auto mt-4 p-3">
         <div className="flex flex-row justify-between items-center">
-          <h1 data-testid="user-name">{`Welcome ${user.name}!`}</h1>
+          <h1 className="text-3xl" data-testid="user-name">{`Welcome ${user.name}!`}</h1>
           <img data-testid="user-image" src={user.image} alt="profile pic" />
         </div>
         <h2 className="my-3">Spaces</h2>
