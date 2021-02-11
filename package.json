@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "match-sorter": "^6.2.0",
     "next": "10.0.6",
-    "next-auth": "^3.2.1",
+    "next-auth": "^3.3.0",
     "pg": "^8.5.1",
     "postcss": "^8.2.5",
     "react": "17.0.1",
