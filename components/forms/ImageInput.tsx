@@ -64,7 +64,11 @@ const ImageInput: React.FC<ImageInputProps> = ({ image, register, setImage, name
         </div>
       </div>
       <div>
-        <button id="upload_widget" className="cloudinary-button" onClick={(e) => openCloudinary(e)}>
+        <button
+          id="upload_widget"
+          className="cloudinary-button p-3 bg-blue-600 rounded shadow text-white"
+          onClick={(e) => openCloudinary(e)}
+        >
           Upload file?
         </button>
       </div>
