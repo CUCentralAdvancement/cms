@@ -8,7 +8,7 @@ else
   # echo "Migrating database..."
   # yarn migrate
 
-  # echo "Generating prisma client..."
+  echo "Not Generating prisma client..."
   # yarn gen 
 
   # Split db url into parts since the pg:copy command needs it to confirm deletion.
