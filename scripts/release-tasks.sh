@@ -8,8 +8,8 @@ else
   # echo "Migrating database..."
   # yarn migrate
 
-  echo "Generating prisma client..."
-  yarn gen 
+  echo "Not Generating prisma client..."
+  # yarn gen 
 
   # Split db url into parts since the pg:copy command needs it to confirm deletion.
   # ${DB_NAME[3]} ends up being the database name.
@@ -31,12 +31,3 @@ else
   # curl https://digital-dash-stage-adv-cu.herokuapp.com/api/review-apps/${HEROKU_APP_NAME}/${HEROKU_BRANCH}
 
 fi
-
-  # echo "Copying scaffolding files..."
-  # cp /app/scripts/templates/.htaccess /app/web/sites/default/files
-
-  # echo "Importing any config changes..."
-  # /app/vendor/bin/drush cim -y
-
-  # echo "Clearing cache..."
-  # /app/vendor/bin/drush cr

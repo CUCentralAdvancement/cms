@@ -6,7 +6,7 @@ const next = require('next');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-const wwwhisper = require('connect-wwwhisper');
+// const wwwhisper = require('connect-wwwhisper');
 
 const httpsPort = 3443;
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -17,7 +17,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  server.use(wwwhisper());
+  // server.use(wwwhisper());
 
   server.all('*', (req, res) => {
     return handle(req, res);
