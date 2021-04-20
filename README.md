@@ -1,3 +1,5 @@
+**Archived Status** This is a previous experiment in the "DE CMS Migration Project" that didn't turn out well. Current work for the CMS backend is being developed at: https://github.com/CUCentralAdvancement/giving-backend
+
 # CU Central Advancement CMS
 
 The Central Advancement Content Management System. This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
